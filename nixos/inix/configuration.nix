@@ -118,6 +118,7 @@
     pinentry-curses
     libfido2
     pciutils
+    kitty
   ];
 
 
@@ -130,7 +131,7 @@
   };
 
   # hyprland
-  programs.hyprland.enable = true;
+  # programs.hyprland.enable = true;
 
   # due yubikey
   programs.ssh.startAgent = false;

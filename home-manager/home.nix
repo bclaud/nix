@@ -1,7 +1,10 @@
 # This is your home-manager configuration file
 # Use this to configure your home environment (it replaces ~/.config/nixpkgs/home.nix)
 
-{ inputs, lib, config, pkgs, ... }: {
+{ inputs, lib, config, pkgs, ... }:
+  let
+    common = import ./common
+ {
   # You can import other home-manager modules here
   imports = [
     # If you want to use home-manager modules from other flakes (such as nix-colors):
@@ -9,6 +12,8 @@
 
     # You can also split up your configuration and import pieces of it here:
     # ./nvim.nix
+
+    common
   ];
 
   nixpkgs = {
@@ -35,13 +40,13 @@
 
   # TODO: Set your username
   home = {
-    username = "your-username";
-    homeDirectory = "/home/your-username";
+    username = "nclaud";
+    homeDirectory = "/home/nclaud";
   };
 
   # Add stuff for your user as you see fit:
   # programs.neovim.enable = true;
-  # home.packages = with pkgs; [ steam ];
+  home.packages = with pkgs; [ lazydocker lazygit kitty ];
 
   # Enable home-manager and git
   programs.home-manager.enable = true;
