@@ -46,11 +46,11 @@
     bind = $mod, T, exec, foot
     bind = $mod, B, exec, firefox
     bind = $mod, C, killactive, 
-    bind = $mod, M, exit, 
     bind = $mod, E, exec, nautilus
     bind = $mod, V, togglefloating, 
     bind = $mod, S, exec, wofi --show drun
     bind = $mod, O, togglesplit, # dwindle
+    bind = $mod, F, fullscreen
 
     # Move focus with mod + arrow keys
     bind = $mod, l , movefocus, l
