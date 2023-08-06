@@ -2,8 +2,6 @@
 # Use this to configure your home environment (it replaces ~/.config/nixpkgs/home.nix)
 
 { inputs, lib, config, pkgs, ... }:
-  let
-    common = import ./common
  {
   # You can import other home-manager modules here
   imports = [
@@ -13,7 +11,7 @@
     # You can also split up your configuration and import pieces of it here:
     # ./nvim.nix
 
-    common
+    # import ./common
   ];
 
   nixpkgs = {
@@ -46,7 +44,7 @@
 
   # Add stuff for your user as you see fit:
   # programs.neovim.enable = true;
-  home.packages = with pkgs; [ lazydocker lazygit kitty ];
+  home.packages = with pkgs; [ lazydocker lazygit ];
 
   # Enable home-manager and git
   programs.home-manager.enable = true;

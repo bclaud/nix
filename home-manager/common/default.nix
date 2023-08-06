@@ -6,5 +6,6 @@
     ./wezterm
     ./vscodium
     ./zellij
+    ./foot
 ]
 
