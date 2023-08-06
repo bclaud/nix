@@ -136,14 +136,14 @@
   # fonts
 
   fonts = {
-    packages = with pkgs; [
+    fonts = with pkgs; [
       jetbrains-mono
       roboto
       openmoji-color
       fira-code
       (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
-    ]
-  }
+    ];
+  };
 
   # due yubikey
   programs.ssh.startAgent = false;

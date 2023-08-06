@@ -11,8 +11,8 @@
     # You can also split up your configuration and import pieces of it here:
     # ./nvim.nix
 
-    # import ./common
-  ];
+      ./hyprland
+  ] ++ import ./common;
 
   nixpkgs = {
     # You can add overlays here
