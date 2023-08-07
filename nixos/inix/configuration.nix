@@ -11,6 +11,14 @@
       ./vm.nix
     ];
 
+
+    environment = {
+      loginShellInit = ''
+         if [ "$(tty)" = "/dev/tty1" ]; then
+          exec Hyprland &> /dev/null
+         fi
+      '';
+    };
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -53,7 +61,9 @@
   services.xserver.videoDrivers = ["amdgpu"];
 
   # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.sddm.enable = true;
+  services.xserver.displayManager.gdm.enable = false;
+  services.xserver.displayManager.sddm.enable = false;
+  services.xserver.displayManager.lightdm.enable = false;
   #services.xserver.desktopManager.gnome.enable = true;
 
   # Configure keymap in X11

@@ -1,6 +1,34 @@
 {pkgs, ...}:
     {
+     # not well configured dependencies (should not be at PATH IMO)
      home.packages = with pkgs; [ wofi gnome.nautilus ];
+
+     # Login TTY
+
+     programs = {
+      fish.loginShellInit = ''
+        if test (tty) = "/dev/tty1"
+          exec Hyprland &> /dev/null
+        end
+      '';
+      zsh.loginExtra = ''
+        if [ "$(tty)" = "/dev/tty1" ]; then
+          exec Hyprland &> /dev/null
+        fi
+      '';
+      zsh.profileExtra = ''
+        if [ "$(tty)" = "/dev/tty1" ]; then
+          exec Hyprland &> /dev/null
+        fi
+      '';
+      bash.profileExtra = ''
+        if [[ "$(tty)" = "/dev/tty1" ]]; then
+          Hyprland &> /dev/null
+        fi
+      '';
+      };
+
+     # hyprland config
      wayland.windowManager.hyprland.extraConfig = ''
      
      general {
