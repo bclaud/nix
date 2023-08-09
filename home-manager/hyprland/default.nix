@@ -1,36 +1,93 @@
 {pkgs, ...}:
     {
      # not well configured dependencies (should not be at PATH IMO)
-     home.packages = with pkgs; [ wofi gnome.nautilus ];
+     home.packages = with pkgs; [ wofi gnome.nautilus  ];
 
-     # Login TTY
+     # TODO Login TTY | not working, only on system level
 
      programs = {
-      fish.loginShellInit = ''
-        if test (tty) = "/dev/tty1"
-          exec Hyprland &> /dev/null
-        end
-      '';
-      zsh.loginExtra = ''
-        if [ "$(tty)" = "/dev/tty1" ]; then
-          exec Hyprland &> /dev/null
-        fi
-      '';
-      zsh.profileExtra = ''
-        if [ "$(tty)" = "/dev/tty1" ]; then
-          exec Hyprland &> /dev/null
-        fi
-      '';
-      bash.profileExtra = ''
-        if [[ "$(tty)" = "/dev/tty1" ]]; then
-          Hyprland &> /dev/null
-        fi
-      '';
-      };
+       fish.loginShellInit = ''
+         if test (tty) = "/dev/tty1"
+           exec Hyprland &> /dev/null
+             end
+             '';
+       zsh.loginExtra = ''
+         if [ "$(tty)" = "/dev/tty1" ]; then
+           exec Hyprland &> /dev/null
+             fi
+             '';
+       zsh.profileExtra = ''
+         if [ "$(tty)" = "/dev/tty1" ]; then
+           exec Hyprland &> /dev/null
+             fi
+             '';
+       bash.profileExtra = ''
+         if [[ "$(tty)" = "/dev/tty1" ]]; then
+           Hyprland &> /dev/null
+             fi
+             '';
+
+       waybar = {
+         enable = true;
+         settings = {
+           "bar" = {
+             layer = "top";
+             position = "top";
+             height = 24;
+             width = null;
+             exclusive = true;
+             passthrough = false;
+             spacing = 4;
+             margin = null;
+             fixed-center = true;
+             ipc = true;
+
+             modules-left = [ "wlr/workspaces" ];
+             modules-center = [ ];
+             modules-right = [ 
+               "cpu"
+               "memory"
+               "clock" 
+             ];
+
+             "wlr/workspaces" = {
+               format = "{name}";
+               on-click = "activate";
+               sort-by-number = true;
+               on-scroll-up = "hyprctl dispatch workspace e+1";
+               on-scroll-down = "hyprctl dispatch workspace e-1";
+             };
+
+             cpu = {
+               format = "  {usage}%";
+               interval = 3;
+             };
+             memory = {
+               format = " {used:0.1f}G/{total:0.1f}G ";
+               interval = 5;
+             };
+
+             clock = {
+               interval = 60;
+               align = 0;
+               rotate = 0;
+               tooltip-format = "<big>{:%B %Y}</big>\n<tt><small>{calendar}</small></tt>";
+               format = "  {:%I:%M %p}";
+               format-alt = "  {:%a %b %d, %G}";
+
+             };
+
+           };
+         };
+
+       };
+     };
 
      # hyprland config
      wayland.windowManager.hyprland.extraConfig = ''
-     
+
+     exec-once=waybar
+
      general {
      # See https://wiki.hyprland.org/Configuring/Variables/ for more
 
