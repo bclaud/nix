@@ -1,53 +1,34 @@
 {pkgs, ...}:
     {
      # not well configured dependencies (should not be at PATH IMO)
-     home.packages = with pkgs; [ wofi gnome.nautilus  ];
+     home.packages = with pkgs; [ wofi gnome.nautilus pamixer pavucontrol ];
 
      # TODO Login TTY | not working, only on system level
 
      programs = {
-       fish.loginShellInit = ''
-         if test (tty) = "/dev/tty1"
-           exec Hyprland &> /dev/null
-             end
-             '';
-       zsh.loginExtra = ''
-         if [ "$(tty)" = "/dev/tty1" ]; then
-           exec Hyprland &> /dev/null
-             fi
-             '';
-       zsh.profileExtra = ''
-         if [ "$(tty)" = "/dev/tty1" ]; then
-           exec Hyprland &> /dev/null
-             fi
-             '';
-       bash.profileExtra = ''
-         if [[ "$(tty)" = "/dev/tty1" ]]; then
-           Hyprland &> /dev/null
-             fi
-             '';
 
        waybar = {
+         style = builtins.readFile ./waybar.css;
          enable = true;
          settings = {
            "bar" = {
              layer = "top";
              position = "top";
-             height = 24;
+             height = 28;
              width = null;
              exclusive = true;
              passthrough = false;
              spacing = 4;
              margin = null;
              fixed-center = true;
-             ipc = true;
+             ipc = false;
 
              modules-left = [ "wlr/workspaces" ];
-             modules-center = [ ];
+             modules-center = [ "clock" ];
              modules-right = [ 
+               "pulseaudio"
                "cpu"
                "memory"
-               "clock" 
              ];
 
              "wlr/workspaces" = {
@@ -58,12 +39,34 @@
                on-scroll-down = "hyprctl dispatch workspace e-1";
              };
 
+             pulseaudio = {
+               format = "{icon} {volume}%";
+               format-muted = " Mute";
+               format-bluetooth = " {volume}% {format_source}";
+               format-bluetooth-muted = " Mute";
+               format-source = " {volume}%";
+               format-source-muted = "";
+               format-icons = {
+                 headphone = " ";
+                 hands-free = "";
+                 headset = "";
+                 phone = "";
+                 portable = "";
+                 car = "";
+                 default = [ "" "" "" ];
+               };
+               scroll-step = 5.0;
+               on-click = "pamixer --toggle-mute";
+               on-click-right = "pavucontrol";
+               smooth-scrolling-threshold = 1;
+             };
+
              cpu = {
-               format = "  {usage}%";
+               format = "󰍛  {usage}%";
                interval = 3;
              };
              memory = {
-               format = " {used:0.1f}G/{total:0.1f}G ";
+               format = "  {used:0.1f}G/{total:0.1f}G";
                interval = 5;
              };
 

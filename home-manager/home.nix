@@ -44,7 +44,7 @@
 
   # Add stuff for your user as you see fit:
   # programs.neovim.enable = true;
-  home.packages = with pkgs; [ lazydocker lazygit bottom ];
+  home.packages = with pkgs; [ lazydocker lazygit bottom logseq ];
 
   # Enable home-manager and git
   programs.home-manager.enable = true;
