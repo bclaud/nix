@@ -101,9 +101,6 @@
     description = "nclaud";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
-      firefox
-      git
-    #  thunderbird
     ];
   };
 
@@ -142,6 +139,14 @@
 
   # hyprland
   # programs.hyprland.enable = true;
+  services.dbus.enable = true;
+  xdg.portal = {
+    enable = true;
+    extraPortals = with pkgs; [
+      xdg-desktop-portal-hyprland
+      xdg-desktop-portal-gtk
+    ];
+  };
 
   # fonts
 

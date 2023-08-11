@@ -1,7 +1,7 @@
 {pkgs, ...}:
     {
      # not well configured dependencies (should not be at PATH IMO)
-     home.packages = with pkgs; [ wofi gnome.nautilus pamixer pavucontrol ];
+     home.packages = with pkgs; [ wofi gnome.nautilus pamixer pavucontrol wl-clipboard ];
 
      # TODO Login TTY | not working, only on system level
 

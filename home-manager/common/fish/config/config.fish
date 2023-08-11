@@ -24,3 +24,9 @@ alias n="nvim"
 
 alias zj="zellij"
 alias zje="zellij run -- nvim ."
+
+function nix_run
+	nix run nixpkgs#$argv
+end
+
+alias ,,=nix_run
