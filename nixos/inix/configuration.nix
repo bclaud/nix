@@ -147,6 +147,12 @@
       xdg-desktop-portal-gtk
     ];
   };
+  environment = {
+    variables = {
+      WLR_BACKEND = "vulkan";
+      WLR_RENDERER = "vulkan";
+    };
+  };
 
   # fonts
 
