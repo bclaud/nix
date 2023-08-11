@@ -1,4 +1,4 @@
-{pkgs, ...}:
+{pkgs, inputs, ...}:
     {
      # not well configured dependencies (should not be at PATH IMO)
      home.packages = with pkgs; [ wofi gnome.nautilus pamixer pavucontrol wl-clipboard ];
@@ -8,6 +8,8 @@
      programs = {
 
        waybar = {
+         # TODO fix this not cool
+         package = inputs.hyprland.packages."x86_64-linux".waybar-hyprland;
          style = builtins.readFile ./waybar.css;
          enable = true;
          settings = {
@@ -26,6 +28,7 @@
              modules-left = [ "wlr/workspaces" ];
              modules-center = [ "clock" ];
              modules-right = [ 
+               "network"
                "pulseaudio"
                "cpu"
                "memory"
@@ -38,6 +41,19 @@
                on-scroll-up = "hyprctl dispatch workspace e+1";
                on-scroll-down = "hyprctl dispatch workspace e-1";
              };
+
+             network = {
+               format-wifi = " {essid}";
+               format-ethernet = "{essid}";
+               format-linked = "{ifname} (No IP) ";
+               format-disconnected = "";
+               tooltip = true;
+               tooltip-format = ''
+                 {ifname}
+                 {ipaddr}/{cidr}
+                 Up: {bandwidthUpBits}
+                 Down: {bandwidthDownBits}'';
+               };
 
              pulseaudio = {
                format = "{icon} {volume}%";

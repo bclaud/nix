@@ -1,5 +1,6 @@
 todo:
-    - fix waybar wlr/workspaces
+    - ~~fix waybar wlr/workspaces~~
     - neovim lsp server
-    - ~~scrensharing~~
+    - ~~screensharing~~
+    - Firefox with wrong timezone ._.
 
