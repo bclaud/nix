@@ -54,7 +54,7 @@
     LC_TIME = "pt_BR.UTF-8";
   };
 
-  boot.kernelParams = ["intel_iommu=on"];
+  # boot.kernelParams = ["intel_iommu=on"];
 
   # Enable the X11 windowing system.
   services.xserver.enable = true;
