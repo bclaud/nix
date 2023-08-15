@@ -1,6 +1,6 @@
 todo:
     - ~~fix waybar wlr/workspaces~~
-    - neovim lsp server
+    - neovim lsp server (setup cmd on lspconfig)
     - ~~screensharing~~
     - Firefox with wrong timezone ._.
     - notification (mako)

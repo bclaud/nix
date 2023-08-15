@@ -8,8 +8,7 @@
      programs = {
 
        waybar = {
-         # TODO fix this not cool
-         package = inputs.hyprland.packages."x86_64-linux".waybar-hyprland;
+         package = inputs.hyprland.packages.${pkgs.system}.waybar-hyprland;
          style = builtins.readFile ./waybar.css;
          enable = true;
          settings = {
