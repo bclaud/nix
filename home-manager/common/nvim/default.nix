@@ -10,7 +10,7 @@
       #lsp and treesitter
       nvim-lspconfig
       nvim-cmp
-      nvim-treesitter
+      (nvim-treesitter.withPlugins (_: pkgs.tree-sitter.allGrammars))
       nvim-treesitter-context
       nvim-treesitter-endwise
       nvim-treesitter-refactor

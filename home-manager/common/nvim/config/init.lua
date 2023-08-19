@@ -1,4 +1,3 @@
-
 -- [[ Setting options ]]
 -- See `:help vim.o`
 
@@ -210,6 +209,17 @@ vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
 
 -- LSP settings.
+local lspc = require'lspconfig'
+lspc.nil_ls.setup{}
+lspc.elixirls.setup{
+  -- this crappy 
+  cmd = { "/nix/store/fd8zdyn7wf656n98xz1a32h00y6xdcxm-elixir-ls-0.14.6/bin/elixir-ls" }
+}
+lspc.lua_ls.setup{
+  -- this crappy 
+  cmd = { "/nix/store/sc0npa9jilra55k03pp4ilfn9mka7lh0-lua-language-server-3.6.19/bin/lua-language-server" }
+}
+
 --  This function gets run when an LSP connects to a particular buffer.
 local on_attach = function(_, bufnr)
   -- NOTE: Remember that lua is a real programming language, and as such it is possible
