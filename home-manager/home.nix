@@ -17,6 +17,7 @@
   nixpkgs = {
     # You can add overlays here
     overlays = [
+      inputs.unison-nix.overlay
       # If you want to use overlays exported from other flakes:
       # neovim-nightly-overlay.overlays.default
 
@@ -44,7 +45,7 @@
 
   # Add stuff for your user as you see fit:
   # programs.neovim.enable = true;
-  home.packages = with pkgs; [ firefox lazydocker lazygit bottom logseq libreoffice ];
+  home.packages = with pkgs; [ firefox lazydocker lazygit bottom logseq libreoffice insomnia unison-ucm ];
 
   # Enable home-manager and git
   programs.home-manager.enable = true;

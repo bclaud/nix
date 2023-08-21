@@ -10,9 +10,13 @@
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
     hyprland.url = "github:hyprwm/Hyprland";
+
+    unison-nix.url = "github:ceedubs/unison-nix";
+    unison-lang.follows = "nixpkgs";
+
   };
 
-  outputs = { nixpkgs, home-manager, hyprland, ... }@inputs: {
+  outputs = { nixpkgs, home-manager, hyprland, unison-nix, ... }@inputs: {
     # NixOS configuration entrypoint
     # Available through 'nixos-rebuild --flake .#your-hostname'
     nixosConfigurations = {
@@ -30,7 +34,7 @@
 
       "nclaud@inix" = home-manager.lib.homeManagerConfiguration {
         pkgs = nixpkgs.legacyPackages.x86_64-linux; # Home-manager requires 'pkgs' instance
-        extraSpecialArgs = { inherit inputs; }; # Pass flake inputs to our config
+        extraSpecialArgs = { inherit inputs unison-nix; }; # Pass flake inputs to our config
         # > Our main home-manager configuration file <
         modules = [ 
           ./home-manager/home.nix

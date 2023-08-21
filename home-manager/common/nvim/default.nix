@@ -1,5 +1,5 @@
 {pkgs, ...}: {
-  home.packages = with pkgs; [ fzf unzip clang ripgrep fd cargo clang luajit nil nodejs xclip ];
+  home.packages = with pkgs; [ fzf unzip clang ripgrep fd cargo clang luajit nil nodejs xclip unison-ucm ];
   
   programs.neovim= {
     enable = true;
@@ -22,6 +22,7 @@
       fidget-nvim
       luasnip
       vim-nix
+      unison
 
       # not sure about mason
       mason-lspconfig-nvim
