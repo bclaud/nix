@@ -160,7 +160,7 @@
   # fonts
 
   fonts = {
-    fonts = with pkgs; [
+    packages = with pkgs; [
       jetbrains-mono
       roboto
       openmoji-color
