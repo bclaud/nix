@@ -1,4 +1,5 @@
 {pkgs, inputs, ...}:
+{pkgs, ...}:
     {
      # not well configured dependencies (should not be at PATH IMO)
      home.packages = with pkgs; [ wofi gnome.nautilus pamixer pavucontrol wl-clipboard ];
@@ -8,7 +9,7 @@
      programs = {
 
        waybar = {
-         package = inputs.hyprland.packages.${pkgs.system}.waybar-hyprland;
+         package = pkgs.waybar-hyprland;
          style = builtins.readFile ./waybar.css;
          enable = true;
          settings = {
