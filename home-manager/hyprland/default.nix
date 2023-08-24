@@ -1,7 +1,11 @@
-{pkgs, ...}:
+{pkgs, inputs, ...}:
+    let 
+        grimblast = inputs.hyprwm-contrib.packages.${pkgs.system}.grimblast;
+        grimblastBin = "${grimblast}/bin/grimblast";
+    in
     {
      # not well configured dependencies (should not be at PATH IMO)
-     home.packages = with pkgs; [ wofi gnome.nautilus pamixer pavucontrol wl-clipboard ];
+     home.packages = with pkgs; [ wofi gnome.nautilus pamixer pavucontrol wl-clipboard grimblast ];
 
      # TODO Login TTY | not working, only on system level
 
@@ -145,6 +149,8 @@
 
      $mod = SUPERs
   
+    bind = $mod, P, exec, ${grimblastBin} --notify copy output
+    bind = SHIFT + $mod, P, exec, ${grimblastBin} --notify copy area
     bind = $mod, T, exec, foot
     bind = $mod, B, exec, firefox
     bind = $mod, C, killactive, 

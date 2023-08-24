@@ -9,14 +9,22 @@
     home-manager.url = "github:nix-community/home-manager/release-23.05";
     home-manager.inputs.nixpkgs.follows = "nixpkgs";
 
-    hyprland.url = "github:hyprwm/Hyprland";
+    hyprland={
+      url = "github:hyprwm/Hyprland";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    hyprwm-contrib= {
+      url = "github:hyprwm/contrib";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     unison-nix.url = "github:ceedubs/unison-nix";
     unison-lang.follows = "nixpkgs";
 
   };
 
-  outputs = { nixpkgs, home-manager, hyprland, unison-nix, ... }@inputs: {
+  outputs = { nixpkgs, home-manager, hyprland, hyprwm-contrib, unison-nix, ... }@inputs: {
     # NixOS configuration entrypoint
     # Available through 'nixos-rebuild --flake .#your-hostname'
     nixosConfigurations = {
