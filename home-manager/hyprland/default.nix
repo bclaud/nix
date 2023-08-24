@@ -1,4 +1,3 @@
-{pkgs, inputs, ...}:
 {pkgs, ...}:
     {
      # not well configured dependencies (should not be at PATH IMO)
@@ -9,7 +8,6 @@
      programs = {
 
        waybar = {
-         package = pkgs.waybar-hyprland;
          style = builtins.readFile ./waybar.css;
          enable = true;
          settings = {
