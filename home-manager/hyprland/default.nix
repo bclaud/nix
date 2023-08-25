@@ -6,6 +6,7 @@
     {
      # not well configured dependencies (should not be at PATH IMO)
      home.packages = with pkgs; [ wofi gnome.nautilus pamixer pavucontrol wl-clipboard grimblast ];
+     home.packages = with pkgs; [ wofi gnome.nautilus pamixer pavucontrol wl-clipboard mako grimblast ];
 
      # TODO Login TTY | not working, only on system level
 
@@ -108,6 +109,7 @@
      wayland.windowManager.hyprland.extraConfig = ''
 
      exec-once=waybar
+     exec-once=mako
 
      general {
      # See https://wiki.hyprland.org/Configuring/Variables/ for more
