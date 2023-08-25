@@ -20,7 +20,7 @@ alias g="git"
 alias lzd="lazydocker"
 alias lzg="lazygit"
 
-alias n="nvim"
+alias n="nvim ."
 
 alias zj="zellij"
 alias zje="zellij run -- nvim ."
@@ -30,3 +30,9 @@ function nix_run
 end
 
 alias ,,=nix_run
+
+function nix_shell_fish
+	nix shell nixpkgs#$argv -c fish
+end
+
+alias ,.=nix_shell_fish

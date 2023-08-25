@@ -169,6 +169,9 @@
     bind = $mod, j, movefocus, d
   
      # workspaces
+    bind = $mod, N, workspace, 1
+    bind = $mod, M, workspace, 2
+
       binds $mod + [shift +] {1..10} to [move to] workspace {1..10}
       ${builtins.concatStringsSep "\n" (builtins.genList (
          x: let
@@ -184,3 +187,4 @@
        10)}
        '';
     }
+
