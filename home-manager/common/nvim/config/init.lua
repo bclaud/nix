@@ -217,7 +217,7 @@ lspc.elixirls.setup{
 }
 lspc.lua_ls.setup{
   -- this crappy 
-  cmd = { "/nix/store/sc0npa9jilra55k03pp4ilfn9mka7lh0-lua-language-server-3.6.19/bin/lua-language-server" }
+  cmd = { "/nix/store/f4wvqw5lwc6hjkkq9zimfvldb8vlmga6-lua-language-server-3.6.19/bin/lua-language-server" }
 }
 
 --  This function gets run when an LSP connects to a particular buffer.

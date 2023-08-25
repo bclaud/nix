@@ -10,7 +10,8 @@
       #lsp and treesitter
       nvim-lspconfig
       nvim-cmp
-      (nvim-treesitter.withPlugins (_: pkgs.tree-sitter.allGrammars))
+      #(nvim-treesitter.withPlugins (_: pkgs.tree-sitter.allGrammars))
+      nvim-treesitter.withAllGrammars
       nvim-treesitter-context
       nvim-treesitter-endwise
       nvim-treesitter-refactor
@@ -25,7 +26,7 @@
       unison
 
       # not sure about mason
-      mason-lspconfig-nvim
+      #mason-lspconfig-nvim
 
       #git
       vim-fugitive
