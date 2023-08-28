@@ -154,6 +154,7 @@
     variables = {
       WLR_BACKEND = "vulkan";
       WLR_RENDERER = "vulkan";
+      TZ = "America/Sao_Paulo"; # fix for firefox datetime ._.
     };
   };
 
