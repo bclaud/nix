@@ -1,6 +1,6 @@
 {pkgs, ...}: {
   home.packages = with pkgs; [ fzf unzip clang ripgrep fd cargo clang luajit nil nodejs xclip unison-ucm ];
-  
+
   programs.neovim= {
     enable = true;
     defaultEditor = true;
@@ -35,7 +35,7 @@
       gitsigns-nvim
 
       #themes and fancystuff
-     onedark-nvim
+      onedark-nvim
       lualine-nvim
       gruvbox-material
 
@@ -44,223 +44,223 @@
       telescope-file-browser-nvim
       plenary-nvim
 
-      ];
-      extraPackages = with pkgs; [ nil elixir-ls lua-language-server kotlin-language-server ];
-    };
-  
-    xdg.configFile."nvim/init.lua".text = ''
--- [[ Setting options ]]
--- See `:help vim.o`
--- personal configs
-vim.o.relativenumber = true
-vim.o.scrolloff = 10
+    ];
+    extraPackages = with pkgs; [ nil elixir-ls lua-language-server kotlin-language-server ];
+  };
 
--- make paste persistant
-vim.keymap.set("x", "<leader>p", "\"_dP")
+  xdg.configFile."nvim/init.lua".text = ''
+  -- [[ Setting options ]]
+  -- See `:help vim.o`
+  -- personal configs
+  vim.o.relativenumber = true
+  vim.o.scrolloff = 10
 
--- yank to registry
-vim.keymap.set("n", "<leader>y", "\"+y")
-vim.keymap.set("v", "<leader>y", "\"+y")
-vim.keymap.set("n", "<leader>y", "\"+Y")
+  -- make paste persistant
+  vim.keymap.set("x", "<leader>p", "\"_dP")
 
-vim.keymap.set("n", "Q", "<nop>")
+  -- yank to registry
+  vim.keymap.set("n", "<leader>y", "\"+y")
+  vim.keymap.set("v", "<leader>y", "\"+y")
+  vim.keymap.set("n", "<leader>y", "\"+Y")
 
-vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+  vim.keymap.set("n", "Q", "<nop>")
 
--- Set highlight on search
-vim.o.hlsearch = false
+  vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
 
-vim.opt.clipboard = 'unnamedplus'
+  -- Set highlight on search
+  vim.o.hlsearch = false
 
--- Make line numbers default
-vim.wo.number = true
+  vim.opt.clipboard = 'unnamedplus'
 
--- Enable mouse mode
-vim.o.mouse = 'a'
+  -- Make line numbers default
+  vim.wo.number = true
 
--- Enable break indent
-vim.o.breakindent = true
+  -- Enable mouse mode
+  vim.o.mouse = 'a'
 
--- Save undo history
-vim.o.undofile = true
+  -- Enable break indent
+  vim.o.breakindent = true
 
--- Case insensitive searching UNLESS /C or capital in search
-vim.o.ignorecase = true
-vim.o.smartcase = true
+  -- Save undo history
+  vim.o.undofile = true
 
--- Decrease update time
-vim.o.updatetime = 250
-vim.wo.signcolumn = 'yes'
+  -- Case insensitive searching UNLESS /C or capital in search
+  vim.o.ignorecase = true
+  vim.o.smartcase = true
 
--- Set colorscheme
-vim.o.termguicolors = true
-vim.cmd [[colorscheme onedark]]
+  -- Decrease update time
+  vim.o.updatetime = 250
+  vim.wo.signcolumn = 'yes'
 
--- Set completeopt to have a better completion experience
-vim.o.completeopt = 'menuone,noselect'
+  -- Set colorscheme
+  vim.o.termguicolors = true
+  vim.cmd [[colorscheme onedark]]
 
--- [[ Basic Keymaps ]]
--- Set <space> as the leader key
--- See `:help mapleader`
---  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
-vim.g.mapleader = ' '
-vim.g.maplocalleader = ' '
+  -- Set completeopt to have a better completion experience
+  vim.o.completeopt = 'menuone,noselect'
 
--- Keymaps for better default experience
--- See `:help vim.keymap.set()`
-vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
+  -- [[ Basic Keymaps ]]
+  -- Set <space> as the leader key
+  -- See `:help mapleader`
+  --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
+  vim.g.mapleader = ' '
+  vim.g.maplocalleader = ' '
 
--- Remap for dealing with word wrap
-vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
-vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+  -- Keymaps for better default experience
+  -- See `:help vim.keymap.set()`
+  vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 
--- [[ Highlight on yank ]]
--- See `:help vim.highlight.on_yank()`
-local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
-vim.api.nvim_create_autocmd('TextYankPost', {
-  callback = function()
+  -- Remap for dealing with word wrap
+  vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
+  vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+
+  -- [[ Highlight on yank ]]
+  -- See `:help vim.highlight.on_yank()`
+  local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
+  vim.api.nvim_create_autocmd('TextYankPost', {
+    callback = function()
     vim.highlight.on_yank()
-  end,
-  group = highlight_group,
-  pattern = '*',
-})
+    end,
+    group = highlight_group,
+    pattern = '*',
+  })
 
--- Set lualine as statusline
--- See `:help lualine.txt`
-require('lualine').setup {
-  options = {
-    icons_enabled = false,
-    component_separators = '|',
-    section_separators = "",
-  },
-}
+  -- Set lualine as statusline
+  -- See `:help lualine.txt`
+  require('lualine').setup {
+    options = {
+      icons_enabled = false,
+      component_separators = '|',
+      section_separators = "",
+    },
+  }
 
--- Enable Comment.nvim NOT WORKING
--- require('Comment').setup()
+  -- Enable Comment.nvim NOT WORKING
+  -- require('Comment').setup()
 
--- Enable `lukas-reineke/indent-blankline.nvim`
--- See `:help indent_blankline.txt`
-require('indent_blankline').setup {
-  char = '┊',
-  show_trailing_blankline_indent = false,
-}
+  -- Enable `lukas-reineke/indent-blankline.nvim`
+  -- See `:help indent_blankline.txt`
+  require('indent_blankline').setup {
+    char = '┊',
+    show_trailing_blankline_indent = false,
+  }
 
--- Gitsigns
--- See `:help gitsigns.txt`
-require('gitsigns').setup {
-  signs = {
-    add = { text = '+' },
-    change = { text = '~' },
-    delete = { text = '_' },
-    topdelete = { text = '‾' },
-    changedelete = { text = '~' },
-  },
-}
+  -- Gitsigns
+  -- See `:help gitsigns.txt`
+  require('gitsigns').setup {
+    signs = {
+      add = { text = '+' },
+      change = { text = '~' },
+      delete = { text = '_' },
+      topdelete = { text = '‾' },
+      changedelete = { text = '~' },
+    },
+  }
 
--- [[ Configure Telescope ]]
--- See `:help telescope` and `:help telescope.setup()`
-require('telescope').setup {
-  defaults = {
-    mappings = {
-      i = {
-        ['<C-u>'] = false,
-        ['<C-d>'] = false,
+  -- [[ Configure Telescope ]]
+  -- See `:help telescope` and `:help telescope.setup()`
+  require('telescope').setup {
+    defaults = {
+      mappings = {
+        i = {
+          ['<C-u>'] = false,
+          ['<C-d>'] = false,
+        },
       },
     },
-  },
-}
+  }
 
--- Enable telescope fzf native, if installed
-pcall(require('telescope').load_extension, 'fzf')
+  -- Enable telescope fzf native, if installed
+  pcall(require('telescope').load_extension, 'fzf')
 
--- See `:help telescope.builtin`
-vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
-vim.keymap.set('n', '<leader><space>', require('telescope.builtin').buffers, { desc = '[ ] Find existing buffers' })
-vim.keymap.set('n', '<leader>/', function()
+  -- See `:help telescope.builtin`
+  vim.keymap.set('n', '<leader>?', require('telescope.builtin').oldfiles, { desc = '[?] Find recently opened files' })
+  vim.keymap.set('n', '<leader><space>', require('telescope.builtin').buffers, { desc = '[ ] Find existing buffers' })
+  vim.keymap.set('n', '<leader>/', function()
   -- You can pass additional configuration to telescope to change theme, layout, etc.
   require('telescope.builtin').current_buffer_fuzzy_find(require('telescope.themes').get_dropdown {
     winblend = 10,
     previewer = false,
   })
-end, { desc = '[/] Fuzzily search in current buffer]' })
+  end, { desc = '[/] Fuzzily search in current buffer]' })
 
-vim.keymap.set('n', '<leader>sf', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
-vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
-vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
-vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
-vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
+  vim.keymap.set('n', '<leader>sf', require('telescope.builtin').find_files, { desc = '[S]earch [F]iles' })
+  vim.keymap.set('n', '<leader>sh', require('telescope.builtin').help_tags, { desc = '[S]earch [H]elp' })
+  vim.keymap.set('n', '<leader>sw', require('telescope.builtin').grep_string, { desc = '[S]earch current [W]ord' })
+  vim.keymap.set('n', '<leader>sg', require('telescope.builtin').live_grep, { desc = '[S]earch by [G]rep' })
+  vim.keymap.set('n', '<leader>sd', require('telescope.builtin').diagnostics, { desc = '[S]earch [D]iagnostics' })
 
--- [[ Configure Treesitter ]]
--- See `:help nvim-treesitter`
-require('nvim-treesitter.configs').setup {
-  -- Add languages to be installed here that you want installed for treesitter
+  -- [[ Configure Treesitter ]]
+  -- See `:help nvim-treesitter`
+  require('nvim-treesitter.configs').setup {
+    -- Add languages to be installed here that you want installed for treesitter
 
-  highlight = { enable = true },
-  indent = { enable = true },
-  incremental_selection = {
-    enable = true,
-    keymaps = {
-      init_selection = '<c-space>',
-      node_incremental = '<c-space>',
-      scope_incremental = '<c-s>',
-      node_decremental = '<c-backspace>',
-    },
-  },
-  textobjects = {
-    select = {
+    highlight = { enable = true },
+    indent = { enable = true },
+    incremental_selection = {
       enable = true,
-      lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
       keymaps = {
-        -- You can use the capture groups defined in textobjects.scm
-        ['aa'] = '@parameter.outer',
-        ['ia'] = '@parameter.inner',
-        ['af'] = '@function.outer',
-        ['if'] = '@function.inner',
-        ['ac'] = '@class.outer',
-        ['ic'] = '@class.inner',
+        init_selection = '<c-space>',
+        node_incremental = '<c-space>',
+        scope_incremental = '<c-s>',
+        node_decremental = '<c-backspace>',
       },
     },
-    move = {
-      enable = true,
-      set_jumps = true, -- whether to set jumps in the jumplist
-      goto_next_start = {
-        [']m'] = '@function.outer',
-        [']]'] = '@class.outer',
+    textobjects = {
+      select = {
+        enable = true,
+        lookahead = true, -- Automatically jump forward to textobj, similar to targets.vim
+        keymaps = {
+          -- You can use the capture groups defined in textobjects.scm
+          ['aa'] = '@parameter.outer',
+          ['ia'] = '@parameter.inner',
+          ['af'] = '@function.outer',
+          ['if'] = '@function.inner',
+          ['ac'] = '@class.outer',
+          ['ic'] = '@class.inner',
+        },
       },
-      goto_next_end = {
-        [']M'] = '@function.outer',
-        [']['] = '@class.outer',
+      move = {
+        enable = true,
+        set_jumps = true, -- whether to set jumps in the jumplist
+        goto_next_start = {
+          [']m'] = '@function.outer',
+          [']]'] = '@class.outer',
+        },
+        goto_next_end = {
+          [']M'] = '@function.outer',
+          [']['] = '@class.outer',
+        },
+        goto_previous_start = {
+          ['[m'] = '@function.outer',
+          ['[['] = '@class.outer',
+        },
+        goto_previous_end = {
+          ['[M'] = '@function.outer',
+          ['[]'] = '@class.outer',
+        },
       },
-      goto_previous_start = {
-        ['[m'] = '@function.outer',
-        ['[['] = '@class.outer',
-      },
-      goto_previous_end = {
-        ['[M'] = '@function.outer',
-        ['[]'] = '@class.outer',
+      swap = {
+        enable = true,
+        swap_next = {
+          ['<leader>a'] = '@parameter.inner',
+        },
+        swap_previous = {
+          ['<leader>A'] = '@parameter.inner',
+        },
       },
     },
-    swap = {
-      enable = true,
-      swap_next = {
-        ['<leader>a'] = '@parameter.inner',
-      },
-      swap_previous = {
-        ['<leader>A'] = '@parameter.inner',
-      },
-    },
-  },
-}
+  }
 
--- Diagnostic keymaps
-vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
-vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
-vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
-vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
+  -- Diagnostic keymaps
+  vim.keymap.set('n', '[d', vim.diagnostic.goto_prev)
+  vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
+  vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
+  vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
 
 
---  This function gets run when an LSP connects to a particular buffer.
-local on_attach = function(_, bufnr)
+  --  This function gets run when an LSP connects to a particular buffer.
+  local on_attach = function(_, bufnr)
   -- NOTE: Remember that lua is a real programming language, and as such it is possible
   -- to define small helper and utility functions so you don't have to repeat yourself
   -- many times.
@@ -268,11 +268,11 @@ local on_attach = function(_, bufnr)
   -- In this case, we create a function that lets us more easily define mappings specific
   -- for LSP related items. It sets the mode, buffer and description for us each time.
   local nmap = function(keys, func, desc)
-    if desc then
-      desc = 'LSP: ' .. desc
-    end
+  if desc then
+  desc = 'LSP: ' .. desc
+  end
 
-    vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
+  vim.keymap.set('n', keys, func, { buffer = bufnr, desc = desc })
   end
 
   nmap('<leader>rn', vim.lsp.buf.rename, '[R]e[n]ame')
@@ -294,92 +294,87 @@ local on_attach = function(_, bufnr)
   nmap('<leader>wa', vim.lsp.buf.add_workspace_folder, '[W]orkspace [A]dd Folder')
   nmap('<leader>wr', vim.lsp.buf.remove_workspace_folder, '[W]orkspace [R]emove Folder')
   nmap('<leader>wl', function()
-    print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
+  print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
   end, '[W]orkspace [L]ist Folders')
 
   -- Create a command `:Format` local to the LSP buffer
   vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
-    if vim.lsp.buf.format then
-      vim.lsp.buf.format()
-    elseif vim.lsp.buf.formatting then
-      vim.lsp.buf.formatting()
-    end
+  if vim.lsp.buf.format then
+  vim.lsp.buf.format()
+  elseif vim.lsp.buf.formatting then
+  vim.lsp.buf.formatting()
+  end
   end, { desc = 'Format current buffer with LSP' })
-end
+  end
 
 
--- Turn on lsp status information
-require('fidget').setup()
+  -- Turn on lsp status information
+  require('fidget').setup()
 
--- Example custom configuration for lua
---
--- Make runtime files discoverable to the server
-local runtime_path = vim.split(package.path, ';')
-table.insert(runtime_path, 'lua/?.lua')
-table.insert(runtime_path, 'lua/?/init.lua')
+  -- Example custom configuration for lua
+  --
+  -- Make runtime files discoverable to the server
+  local runtime_path = vim.split(package.path, ';')
+  table.insert(runtime_path, 'lua/?.lua')
+  table.insert(runtime_path, 'lua/?/init.lua')
 
--- nvim-cmp setup
-local cmp = require 'cmp'
-local luasnip = require 'luasnip'
+  -- nvim-cmp setup
+  local cmp = require 'cmp'
+  local luasnip = require 'luasnip'
 
-cmp.setup {
-  snippet = {
-    expand = function(args)
+  cmp.setup {
+    snippet = {
+      expand = function(args)
       luasnip.lsp_expand(args.body)
-    end,
-  },
-  mapping = cmp.mapping.preset.insert {
-    ['<C-d>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-f>'] = cmp.mapping.scroll_docs(4),
-    ['<C-Space>'] = cmp.mapping.complete(),
-    ['<CR>'] = cmp.mapping.confirm {
-      behavior = cmp.ConfirmBehavior.Replace,
-      select = true,
+      end,
     },
-    ['<Tab>'] = cmp.mapping(function(fallback)
+    mapping = cmp.mapping.preset.insert {
+      ['<C-d>'] = cmp.mapping.scroll_docs(-4),
+      ['<C-f>'] = cmp.mapping.scroll_docs(4),
+      ['<C-Space>'] = cmp.mapping.complete(),
+      ['<CR>'] = cmp.mapping.confirm {
+        behavior = cmp.ConfirmBehavior.Replace,
+        select = true,
+      },
+      ['<Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
-        cmp.select_next_item()
+      cmp.select_next_item()
       elseif luasnip.expand_or_jumpable() then
-        luasnip.expand_or_jump()
+      luasnip.expand_or_jump()
       else
-        fallback()
+      fallback()
       end
-    end, { 'i', 's' }),
-    ['<S-Tab>'] = cmp.mapping(function(fallback)
+      end, { 'i', 's' }),
+      ['<S-Tab>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
-        cmp.select_prev_item()
+      cmp.select_prev_item()
       elseif luasnip.jumpable(-1) then
-        luasnip.jump(-1)
+      luasnip.jump(-1)
       else
-        fallback()
+      fallback()
       end
-    end, { 'i', 's' }),
-  },
-  sources = {
-    { name = 'nvim_lsp' },
-    { name = 'luasnip' },
-  },
-}
+      end, { 'i', 's' }),
+    },
+    sources = {
+      { name = 'nvim_lsp' },
+      { name = 'luasnip' },
+    },
+  }
 
-      local lspc = require'lspconfig'
-      lspc.nil_ls.setup{}
-      lspc.elixirls.setup{
-        -- this crappy 
-        cmd = { "${pkgs.elixir-ls}/bin/elixir-ls" }
-      }
-      lspc.lua_ls.setup{
-        -- this crappy 
-        cmd = { "${pkgs.lua-language-server}/bin/lua_language_server" }
-      }
-      lspc.kotlin_language_server.setup{
-        cmd = { "${pkgs.kotlin-language-server}/bin/kotlin-language-server" },
-        filetypes = {"kotlin"},
-        -- root_dir = {root_pattern("settings.gradle")}
-      }
-      '';
-    
-    #xdg.configFile.nvim = {
-     # source = ./config;
-     # recursive = true;
-    #};
+  local lspc = require'lspconfig'
+  lspc.nil_ls.setup{}
+  lspc.elixirls.setup{
+    -- this crappy 
+    cmd = { "${pkgs.elixir-ls}/bin/elixir-ls" }
+  }
+  lspc.lua_ls.setup{
+    -- this crappy 
+    cmd = { "${pkgs.lua-language-server}/bin/lua_language_server" }
+  }
+  lspc.kotlin_language_server.setup{
+    cmd = { "${pkgs.kotlin-language-server}/bin/kotlin-language-server" },
+    filetypes = {"kotlin"},
+    -- root_dir = {root_pattern("settings.gradle")}
+  }
+  '';
 }
