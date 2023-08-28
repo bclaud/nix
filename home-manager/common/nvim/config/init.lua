@@ -1,6 +1,6 @@
 -- [[ Setting options ]]
 -- See `:help vim.o`
-
+require("lspconf")
 -- personal configs
 vim.o.relativenumber = true
 vim.o.scrolloff = 10
@@ -208,17 +208,6 @@ vim.keymap.set('n', ']d', vim.diagnostic.goto_next)
 vim.keymap.set('n', '<leader>e', vim.diagnostic.open_float)
 vim.keymap.set('n', '<leader>q', vim.diagnostic.setloclist)
 
--- LSP settings.
-local lspc = require'lspconfig'
-lspc.nil_ls.setup{}
-lspc.elixirls.setup{
-  -- this crappy 
-  cmd = { "/nix/store/fd8zdyn7wf656n98xz1a32h00y6xdcxm-elixir-ls-0.14.6/bin/elixir-ls" }
-}
-lspc.lua_ls.setup{
-  -- this crappy 
-  cmd = { "/nix/store/f4wvqw5lwc6hjkkq9zimfvldb8vlmga6-lua-language-server-3.6.19/bin/lua-language-server" }
-}
 
 --  This function gets run when an LSP connects to a particular buffer.
 local on_attach = function(_, bufnr)
