@@ -5,10 +5,14 @@
     in
     {
      # not well configured dependencies (should not be at PATH IMO)
-     home.packages = with pkgs; [ wofi gnome.nautilus pamixer pavucontrol wl-clipboard grimblast ];
-     home.packages = with pkgs; [ wofi gnome.nautilus pamixer pavucontrol wl-clipboard mako grimblast ];
+     home.packages = with pkgs; [ wofi gnome.nautilus pamixer pavucontrol wl-clipboard mako grimblast hyprpaper ];
 
      # TODO Login TTY | not working, only on system level
+
+     xdg.configFile."hypr/hyprpaper.conf".text = ''
+       preload = ${../../wallpapers/wallpaper1.jpg}
+       wallpaper =  HDMI-A-1,${../../wallpapers/wallpaper1.jpg}
+     '';
 
      programs = {
 
@@ -110,6 +114,7 @@
 
      exec-once=waybar
      exec-once=mako
+     exec-once=hyprpaper
 
      general {
      # See https://wiki.hyprland.org/Configuring/Variables/ for more
