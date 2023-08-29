@@ -45,7 +45,7 @@
       plenary-nvim
 
     ];
-    extraPackages = with pkgs; [ nil elixir-ls lua-language-server kotlin-language-server ];
+    extraPackages = with pkgs; [ nil elixir-ls lua-language-server kotlin-language-server nodePackages.pyright ];
   };
 
   xdg.configFile."nvim/init.lua".text = ''
@@ -362,19 +362,32 @@
   }
 
   local lspc = require'lspconfig'
+
   lspc.nil_ls.setup{}
+
   lspc.elixirls.setup{
     -- this crappy 
     cmd = { "${pkgs.elixir-ls}/bin/elixir-ls" }
   }
+
   lspc.lua_ls.setup{
     -- this crappy 
     cmd = { "${pkgs.lua-language-server}/bin/lua_language_server" }
   }
+
   lspc.kotlin_language_server.setup{
     cmd = { "${pkgs.kotlin-language-server}/bin/kotlin-language-server" },
     filetypes = {"kotlin"},
     -- root_dir = {root_pattern("settings.gradle")}
+  }
+
+  lspc.kotlin_language_server.setup{
+    cmd = { "${pkgs.kotlin-language-server}/bin/kotlin-language-server" },
+    filetypes = {"kotlin"},
+  }
+
+  lspc.pyright.setup{
+    cmd = { "${pkgs.pyright}/bin/pyright", "--stdio" }
   }
   '';
 }
