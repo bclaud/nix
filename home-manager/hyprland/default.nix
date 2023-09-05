@@ -11,7 +11,7 @@
 
      xdg.configFile."hypr/hyprpaper.conf".text = ''
        preload = ${../../wallpapers/wallpaper1.jpg}
-       wallpaper =  HDMI-A-1,${../../wallpapers/wallpaper1.jpg}
+       wallpaper =  DP-1,${../../wallpapers/wallpaper1.jpg}
      '';
 
      programs = {
@@ -86,11 +86,11 @@
 
              cpu = {
                format = "󰍛  {usage}%";
-               interval = 3;
+               interval = 2;
              };
              memory = {
                format = "  {used:0.1f}G/{total:0.1f}G";
-               interval = 5;
+               interval = 2;
              };
 
              clock = {
