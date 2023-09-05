@@ -50,11 +50,11 @@
         "xdph": "xdph"
       },
       "locked": {
-        "lastModified": 1693851147,
-        "narHash": "sha256-kkI7FXwKufOmNIIQQHr868tneIV8ggqupBA0EJ/jAuI=",
+        "lastModified": 1693924420,
+        "narHash": "sha256-vs1zXfNWGvMwegeIb1IeIypVrO11rkoFI3d7Eybd32A=",
         "owner": "hyprwm",
         "repo": "Hyprland",
-        "rev": "4ddcda93f5887792a953332bf1b487e4b2c3b4ed",
+        "rev": "fa3de9b70e95ea8f0ebac16ae02f8f0eba0d5b92",
         "type": "github"
       },
       "original": {
