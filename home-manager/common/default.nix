@@ -7,5 +7,6 @@
     ./vscodium
     ./zellij
     ./foot
+    ./kotlin
 ]
 
