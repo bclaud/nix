@@ -1,6 +1,10 @@
 {pkgs, ...}: {
   home.packages = with pkgs; [ fzf unzip clang ripgrep fd cargo clang luajit nil nodejs xclip unison-ucm ];
 
+  home.sessionVariables = {
+    EDITOR="nvim";
+  };
+
   programs.neovim= {
     enable = true;
     defaultEditor = true;
