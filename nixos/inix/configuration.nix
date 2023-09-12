@@ -117,7 +117,7 @@
   hardware.opengl.extraPackages = with pkgs; [ rocm-opencl-icd rocm-opencl-runtime ];
 
   # aditional software
-  services.udev.packages = [pkgs.yubikey-personalization];
+  services.udev.packages = [pkgs.yubikey-personalization pkgs.logitech-udev-rules ];
 
   # List packages installed in system profile. To search, run:
   # $ nix search wget
@@ -129,6 +129,7 @@
     libfido2
     pciutils
     kitty
+    solaar
   ];
 
 
