@@ -6,5 +6,5 @@ todo
  - ~~notification (mako)~~
  - ~~prints (grimblast)~~
  - manage secrets (sops-nix or something like this)
- - Hyprpaper
+ - ~~Hyprpaper~~
 
