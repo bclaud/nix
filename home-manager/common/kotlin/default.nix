@@ -7,7 +7,7 @@ in
 {
   home.packages = with pkgs; [ kotlin gradle jdk kotlin-native ];
   home.sessionVariables = {
-    GRADLE_HOME="${pkgs.gradle}/lib/gradle";
+    GRADLE_HOME="${gradle}/lib/gradle";
   };
 }
 
