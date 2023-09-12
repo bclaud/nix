@@ -32,7 +32,7 @@
              fixed-center = true;
              ipc = false;
 
-             modules-left = [ "wlr/workspaces" ];
+             modules-left = [ "hyprland/workspaces" ];
              modules-center = [ "clock" ];
              modules-right = [ 
                "network"
@@ -41,7 +41,7 @@
                "memory"
              ];
 
-             "wlr/workspaces" = {
+             "hyprland/workspaces" = {
                format = "{name}";
                on-click = "activate";
                sort-by-number = true;
