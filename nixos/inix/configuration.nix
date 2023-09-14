@@ -130,6 +130,12 @@
     pciutils
     kitty
     solaar
+    (pkgs.buildFHSUserEnv {
+      name = "idea-community";
+      targetPkgs = pkgs: [ ];
+      multiPkgs = pkgs: [ pkgs.jetbrains.idea-community ];
+      runScript = "idea-community $*";
+    })
   ];
 
 

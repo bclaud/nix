@@ -45,7 +45,7 @@
 
   # Add stuff for your user as you see fit:
   # programs.neovim.enable = true;
-  home.packages = with pkgs; [ firefox lazydocker lazygit bottom logseq libreoffice insomnia unison-ucm ];
+  home.packages = with pkgs; [ firefox lazydocker lazygit bottom logseq libreoffice insomnia unison-ucm yuzu-ea  steam gamescope vscode-fhs ];
 
   # Enable home-manager and git
   programs.home-manager.enable = true;
