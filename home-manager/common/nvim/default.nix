@@ -1,5 +1,5 @@
 {pkgs, ...}: {
-  home.packages = with pkgs; [ fzf unzip clang ripgrep fd cargo clang luajit nil nodejs xclip unison-ucm ];
+  home.packages = with pkgs; [ fzf unzip clang ripgrep fd cargo clang luajit nil nodejs xclip unison-ucm elixir gnumake ];
 
   home.sessionVariables = {
     EDITOR="nvim";
@@ -370,8 +370,8 @@
   lspc.nil_ls.setup{}
 
   lspc.elixirls.setup{
-    -- this crappy 
-    cmd = { "${pkgs.elixir-ls}/bin/elixir-ls" }
+    cmd = { "${pkgs.elixir-ls}/bin/elixir-ls" },
+    on_attach = on_attach
   }
 
   lspc.lua_ls.setup{
