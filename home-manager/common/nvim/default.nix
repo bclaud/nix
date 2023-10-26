@@ -143,12 +143,9 @@
   -- require('Comment').setup()
 
   -- Enable `lukas-reineke/indent-blankline.nvim`
+  -- For version 3, see :help ibl.setup()
   -- See `:help indent_blankline.txt`
-  require('indent_blankline').setup {
-    char = '┊',
-    show_trailing_blankline_indent = false,
-  }
-
+  
   -- Gitsigns
   -- See `:help gitsigns.txt`
   require('gitsigns').setup {

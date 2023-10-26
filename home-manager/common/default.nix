@@ -7,6 +7,7 @@
     ./vscodium
     ./zellij
     ./foot
-    # ./kotlin
+    ./kotlin
+    ./mangohud
 ]
 

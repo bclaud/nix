@@ -119,7 +119,7 @@
   hardware.opengl.enable = true;
   hardware.opengl.driSupport = true;
   hardware.opengl.driSupport32Bit = true;
-  hardware.opengl.extraPackages = with pkgs; [ rocm-opencl-icd rocm-opencl-runtime ];
+  hardware.opengl.extraPackages = with pkgs; [ rocmPackages.clr.icd rocmPackages.clr ];
 
   # aditional software
   services.udev.packages = [pkgs.yubikey-personalization pkgs.logitech-udev-rules ];
@@ -147,7 +147,25 @@
       multiPkgs = pkgs: [ pkgs.jetbrains.pycharm-community ];
       runScript = "pycharm-community $*";
     })
+    jetbrains.idea-community
+    jetbrains.pycharm-community
+    lact
   ];
+
+  systemd.services.lact = {
+    enable = true;
+    description = "Radeon GPU";
+    after = ["syslog.target" "systemd-modules-load.service" ];
+
+    unitConfig = { ConditionPathExists = "${pkgs.lact}/bin/lact"; };
+
+    serviceConfig = {
+      User = "root";
+      ExecStart = "${pkgs.lact}/bin/lact daemon";
+    };
+
+    wantedBy = [ "multi-user.target" ];
+  };
 
 
   # Some programs need SUID wrappers, can be configured further or are
