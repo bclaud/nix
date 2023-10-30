@@ -83,6 +83,12 @@
     xkbVariant = "";
   };
 
+  services.jellyfin = {
+    enable = true;
+    user = "nclaud";
+    openFirewall = true;
+  };
+
   # Enable CUPS to print documents.
   #services.printing.enable = true;
 
@@ -153,6 +159,9 @@
     jetbrains.idea-community
     jetbrains.pycharm-community
     lact
+    gamescope
+    #k3s
+    #kubernetes-helm
   ];
 
   systemd.services.lact = {
@@ -224,6 +233,14 @@
 
   # required for yubikey
   services.pcscd.enable = true;
+
+  #k3s
+    # This is required so that pod can reach the API server (running on port 6443 by default)
+  networking.firewall.allowedTCPPorts = [ 6443 ];
+  #services.k3s= {
+  #  enable = false;
+  #  role = "server";
+  #};
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
