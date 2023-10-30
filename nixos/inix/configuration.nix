@@ -26,6 +26,9 @@
 
   boot.loader.systemd-boot.memtest86.enable = true;
 
+  # enable emulated aarch64
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
+
   networking.hostName = "inix"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
