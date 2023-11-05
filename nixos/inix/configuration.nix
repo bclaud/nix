@@ -5,8 +5,7 @@
 { config, pkgs, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
+  imports = [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ./vm.nix
     ];
@@ -22,7 +21,7 @@
   # Bootloader.
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.kernelPackages = pkgs.linuxPackages_latest;
+  # boot.kernelPackages = pkgs.linuxPackages_latest;
 
   boot.loader.systemd-boot.memtest86.enable = true;
 
@@ -157,6 +156,7 @@
     jetbrains.pycharm-community
     lact
     gamescope
+    obs-studio
     #k3s
     #kubernetes-helm
   ];
