@@ -80,7 +80,7 @@
   };
 
   services.jellyfin = {
-    enable = true;
+    enable = false;
     user = "nclaud";
     openFirewall = true;
   };
@@ -124,7 +124,7 @@
   hardware.opengl.enable = true;
   hardware.opengl.driSupport = true;
   hardware.opengl.driSupport32Bit = true;
-  hardware.opengl.extraPackages = with pkgs; [ rocmPackages.clr.icd rocmPackages.clr ];
+  hardware.opengl.extraPackages = with pkgs; [ rocmPackages.clr.icd rocmPackages.clr rocmPackages.rocm-smi];
 
   # aditional software
   services.udev.packages = [pkgs.yubikey-personalization pkgs.logitech-udev-rules ];

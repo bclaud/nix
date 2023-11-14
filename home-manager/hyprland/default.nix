@@ -11,7 +11,7 @@
 
      xdg.configFile."hypr/hyprpaper.conf".text = ''
        preload = ${../../wallpapers/wallpaper1.jpg}
-       wallpaper =  DP-1,${../../wallpapers/wallpaper1.jpg}
+       wallpaper =  DP-2,${../../wallpapers/wallpaper1.jpg}
      '';
 
      programs = {
