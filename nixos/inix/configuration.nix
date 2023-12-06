@@ -80,7 +80,7 @@
   };
 
   services.jellyfin = {
-    enable = false;
+    enable = true;
     user = "nclaud";
     openFirewall = true;
   };
@@ -194,6 +194,7 @@
       xdg-desktop-portal-hyprland
       xdg-desktop-portal-gtk
     ];
+    config.common.default = "*";
   };
   environment = {
     variables = {
