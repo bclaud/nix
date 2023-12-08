@@ -126,12 +126,14 @@
      col.inactive_border = rgba(595959aa)
 
      layout = dwindle
+     resize_on_border = true
+
      }
 
      decoration {
      # See https://wiki.hyprland.org/Configuring/Variables/ for more
 
-     rounding = 10
+     rounding = 6
 
      drop_shadow = yes
      shadow_range = 4
@@ -142,8 +144,8 @@
      animations {
      enabled = yes
 
+
      # Autocompletion, etc, take hyprland focus
-     windowrulev2 = noborder, class:^(jetbrains-idea)(.*)$
 
      # Some default animations, see https://wiki.hyprland.org/Configuring/Animations/ for more
 
@@ -193,6 +195,8 @@
          ''
        )
        10)}
+
+    windowrulev2 = noborder, class:^(jetbrains-idea)(.*)$
        '';
     }
 
