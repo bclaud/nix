@@ -14,6 +14,7 @@ let
       };
     });
   });
+
 in
   {
   # You can import other home-manager modules here
@@ -48,7 +49,7 @@ in
       allowUnfree = true;
       # Workaround for https://github.com/nix-community/home-manager/issues/2942
       allowUnfreePredicate = (_: true);
-      permittedInsecurePackages = ["electron-24.8.6"];
+      permittedInsecurePackages = ["electron-24.8.6" "electron-25.9.0"];
     };
   };
 
@@ -60,12 +61,12 @@ in
 
   # Add stuff for your user as you see fit:
   # programs.neovim.enable = true;
-  home.packages = with pkgs; [ firefox lazydocker lazygit bottom logseq libreoffice insomnia unison-ucm yuzu-ea steam gamescope vscode-fhs postman mangohud  (vivaldi.override {
+  home.packages = with pkgs; [ firefox lazydocker lazygit bottom logseq libreoffice insomnia unison-ucm yuzu-ea vscode-fhs postman mangohud  (vivaldi.override {
         proprietaryCodecs = true; 
         enableWidevine = true;
         widevine-cdm = pkgs.widevine-cdm;
         vivaldi-ffmpeg-codecs = pkgs.vivaldi-ffmpeg-codecs;
-      }) ];
+      }) aichat foliate gh ];
 
   # Enable home-manager and git
   programs.home-manager.enable = true;
