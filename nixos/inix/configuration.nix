@@ -85,6 +85,11 @@
     openFirewall = true;
   };
 
+  services.languagetool = {
+    enable = true;
+    allowOrigin = "*";
+  };
+
   # Enable CUPS to print documents.
   #services.printing.enable = true;
 
