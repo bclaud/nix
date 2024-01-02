@@ -371,6 +371,8 @@
     on_attach = on_attach
   }
 
+  lspc.ocamllsp.setup{}
+
   lspc.lua_ls.setup{
     -- this crappy 
     cmd = { "${pkgs.lua-language-server}/bin/lua_language_server" }
