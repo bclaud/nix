@@ -390,7 +390,7 @@
   }
 
   lspc.pyright.setup{
-    cmd = { "${pkgs.pyright}/bin/pyright", "--stdio" }
+    cmd = { "${pkgs.pyright}/bin/pyright-langserver", "--stdio" }
   }
   '';
 }
