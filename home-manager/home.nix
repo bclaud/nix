@@ -61,12 +61,12 @@ in
 
   # Add stuff for your user as you see fit:
   # programs.neovim.enable = true;
-  home.packages = with pkgs; [ firefox lazydocker lazygit bottom logseq libreoffice insomnia unison-ucm yuzu-ea vscode-fhs postman mangohud  (vivaldi.override {
+  home.packages = with pkgs; [ firefox librewolf lazydocker lazygit bottom logseq libreoffice insomnia unison-ucm yuzu-ea vscode-fhs postman mangohud  (vivaldi.override {
         proprietaryCodecs = true; 
         enableWidevine = true;
         widevine-cdm = pkgs.widevine-cdm;
         vivaldi-ffmpeg-codecs = pkgs.vivaldi-ffmpeg-codecs;
-      }) aichat foliate gh ];
+      }) aichat foliate gh mpv jq ];
 
   # Enable home-manager and git
   programs.home-manager.enable = true;
