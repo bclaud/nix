@@ -23,8 +23,6 @@
   boot.loader.efi.canTouchEfiVariables = true;
   # boot.kernelPackages = pkgs.linuxPackages_latest;
 
-  boot.loader.systemd-boot.memtest86.enable = true;
-
   networking.hostName = "inix"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -86,8 +84,12 @@
   };
 
   services.languagetool = {
-    enable = true;
+    enable = false;
     allowOrigin = "*";
+  };
+
+  services.i2p = {
+    enable = false;
   };
 
   # Enable CUPS to print documents.
