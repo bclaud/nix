@@ -110,6 +110,7 @@
      };
 
      # hyprland config
+     wayland.windowManager.hyprland.enable = true;
      wayland.windowManager.hyprland.extraConfig = ''
 
      exec-once=waybar

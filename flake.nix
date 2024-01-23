@@ -45,7 +45,10 @@
       inix = nixpkgs.lib.nixosSystem {
         specialArgs = { inherit inputs; }; # Pass flake inputs to our config
         # > Our main nixos configuration file <
-        modules = [ ./nixos/inix/configuration.nix ];
+        modules = [
+          ./nixos/inix/configuration.nix 
+          inputs.home-manager.nixosModules.default
+        ];
       };
     };
 

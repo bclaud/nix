@@ -2,12 +2,13 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, ... }:
 
 {
   imports = [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ./vm.nix
+      inputs.home-manager.nixosModules.default
     ];
 
 
@@ -193,10 +194,14 @@
   };
 
   # hyprland
-  # programs.hyprland.enable = true;
+  programs.hyprland = {
+    enable = true;
+    package = inputs.hyprland.packages."${pkgs.system}".hyprland;
+  };
+
   services.dbus.enable = true;
   xdg.portal = {
-    enable = true;
+    enable = false;
     extraPortals = with pkgs; [
       xdg-desktop-portal-hyprland
       xdg-desktop-portal-gtk
@@ -238,6 +243,14 @@
 
   # required for yubikey
   services.pcscd.enable = true;
+
+  # home-manager
+  home-manager = {
+    extraSpecialArgs = { inherit inputs; };
+    users = {
+      "nclaud" = import ../../home-manager/home.nix;
+    };
+  };
 
   #k3s
     # This is required so that pod can reach the API server (running on port 6443 by default)
