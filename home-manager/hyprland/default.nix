@@ -5,15 +5,21 @@
     in
     {
      # not well configured dependencies (should not be at PATH IMO)
-     home.packages = with pkgs; [ wofi gnome.nautilus pamixer pavucontrol wl-clipboard mako grimblast hyprpaper ];
+     #wayland stuff
+     home.packages = with pkgs; [ gnome.nautilus pavucontrol wl-clipboard mako grimblast hyprpaper cliphist wl-clip-persist ];
 
-     # TODO Login TTY | not working, only on system level
+     home.sessionVariables = {
+       MOZ_ENABLE_WAYLAND = 1;
+       QT_QPA_PLATFORM = "wayland";
+       LIBSEAT_BACKEND = "logind";
+     };
 
      xdg.configFile."hypr/hyprpaper.conf".text = ''
        preload = ${../../wallpapers/wallpaper1.jpg}
        wallpaper =  DP-2,${../../wallpapers/wallpaper1.jpg}
      '';
 
+     # screensharing
      xdg.portal = {
        enable = true;
        extraPortals = [ inputs.hyprland.packages."${pkgs.system}".xdg-desktop-portal-hyprland pkgs.xdg-desktop-portal-gtk pkgs.xdg-desktop-portal-wlr ];
@@ -85,7 +91,7 @@
                  default = [ "" "" "" ];
                };
                scroll-step = 5.0;
-               on-click = "pamixer --toggle-mute";
+               on-click = "${pkgs.pamixer}/bin/pamixer --toggle-mute";
                on-click-right = "pavucontrol";
                smooth-scrolling-threshold = 1;
              };
@@ -117,11 +123,15 @@
 
      # hyprland config
      wayland.windowManager.hyprland.enable = true;
+     wayland.windowManager.hyprland.systemd.enable = true;
      wayland.windowManager.hyprland.extraConfig = ''
 
      exec-once=waybar
      exec-once=mako
      exec-once=hyprpaper
+
+     exec-once = wl-paste --type text --watch cliphist store #Stores only text data
+     exec-once = wl-paste --type image --watch cliphist store #Stores only image data
 
      general {
      # See https://wiki.hyprland.org/Configuring/Variables/ for more
@@ -174,8 +184,8 @@
     bind = $mod, B, exec, firefox
     bind = $mod, C, killactive, 
     bind = $mod, E, exec, nautilus
-    bind = $mod, V, togglefloating, 
-    bind = $mod, S, exec, wofi --show drun
+    bind = $mod, V, exec, cliphist list | ${pkgs.wofi}/bin/wofi --dmenu | cliphist decode | wl-copy
+    bind = $mod, S, exec, ${pkgs.wofi}/bin/wofi --show drun
     bind = $mod, O, togglesplit, # dwindle
     bind = $mod, F, fullscreen
 

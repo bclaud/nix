@@ -13,6 +13,7 @@
 
 
     environment = {
+      # TODO this is bothering me ._.
       loginShellInit = ''
          if [ "$(tty)" = "/dev/tty1" ]; then
           exec Hyprland &> /dev/null
