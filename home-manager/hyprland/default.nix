@@ -14,6 +14,12 @@
        wallpaper =  DP-2,${../../wallpapers/wallpaper1.jpg}
      '';
 
+     xdg.portal = {
+       enable = true;
+       extraPortals = [ inputs.hyprland.packages."${pkgs.system}".xdg-desktop-portal-hyprland pkgs.xdg-desktop-portal-gtk pkgs.xdg-desktop-portal-wlr ];
+       configPackages = [ inputs.hyprland.packages."${pkgs.system}".hyprland ];
+     };
+
      programs = {
 
        waybar = {
