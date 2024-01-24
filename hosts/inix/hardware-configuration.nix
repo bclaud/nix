@@ -13,6 +13,9 @@
   boot.kernelModules = [ "kvm-intel" "amdgpu" ];
   boot.extraModulePackages = [ ];
 
+  boot.loader.systemd-boot.enable = true;
+  boot.loader.efi.canTouchEfiVariables = true;
+
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/f01f3e8f-3856-453d-ba4a-b7ea2946faa3";
       fsType = "ext4";
@@ -38,4 +41,19 @@
   nixpkgs.hostPlatform = lib.mkDefault "x86_64-linux";
   powerManagement.cpuFreqGovernor = lib.mkDefault "performance";
   hardware.cpu.intel.updateMicrocode = lib.mkDefault config.hardware.enableRedistributableFirmware;
+  
+  # AMD GPU
+  hardware = {
+    opengl = {
+      enable = true;
+      driSupport = true;
+      driSupport32Bit = true;
+      extraPackages = with pkgs; [ 
+        rocmPackages.clr.icd
+        rocmPackages.clr
+        rocmPackages.rocm-smi
+      ];
+    };
+  };
+
 }

@@ -46,7 +46,7 @@
         specialArgs = { inherit inputs; }; # Pass flake inputs to our config
         # > Our main nixos configuration file <
         modules = [
-          ./nixos/inix/configuration.nix 
+          ./hosts/inix 
           inputs.home-manager.nixosModules.default
         ];
       };
