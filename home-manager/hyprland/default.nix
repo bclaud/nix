@@ -1,10 +1,21 @@
 {config, lib, pkgs, inputs, ...}:
 with lib;
 let 
+  cfg = config.desktops.hyprland;
+
+  wofiStyle = {
+    primaryAccent = "7911f5";
+    secondaryAccent = "89b4fa";
+    tertiaryAccent = "f5f5f5";
+    primaryBackgroundRGBA = "rgba(17,17,27,0.8)";
+    terciaryBackgroundRGBA = "rgba(27,27,43,0.8)";
+    background = "11111B";
+    opacity = "1";
+  };
+
   grimblast = inputs.hyprwm-contrib.packages.${pkgs.system}.grimblast;
   grimblastBin = "${grimblast}/bin/grimblast";
 
-  cfg = config.desktops.hyprland;
 in {
 
   options.desktops.hyprland = {
@@ -43,6 +54,46 @@ in {
      };
 
      programs = {
+
+       wofi = {
+         enable = true;
+         settings = {
+           allow_images = true;
+           term = "foot";
+         };
+         style = ''
+         * {
+           font-weight: bold;
+         }
+        #window {
+          border-radius: 40px;
+          background: ${wofiStyle.primaryBackgroundRGBA};
+        }
+        #input {
+          border-radius: 100px;
+          margin: 20px;
+          padding: 15px 25px;
+          background: ${wofiStyle.terciaryBackgroundRGBA};
+          color: #${wofiStyle.tertiaryAccent};
+        }
+        #outer-box {
+          font-weight: bold;
+          font-size: 14px;
+        }
+        #entry {
+          margin: 10px 80px;
+          padding: 20px 20px;
+          border-radius: 200px;
+          color: #${wofiStyle.tertiaryAccent};
+        }
+        #entry:selected{
+          background-color:#${wofiStyle.primaryAccent};
+          color: #${wofiStyle.background};
+        }
+        #entry:hover {
+        }
+        '';
+      };
 
        waybar = {
          style = builtins.readFile ./waybar.css;
@@ -200,8 +251,8 @@ in {
    bind = $mod, B, exec, firefox
    bind = $mod, C, killactive, 
    bind = $mod, E, exec, nautilus
-   bind = $mod, V, exec, cliphist list | ${pkgs.wofi}/bin/wofi --dmenu | cliphist decode | wl-copy
-   bind = $mod, S, exec, ${pkgs.wofi}/bin/wofi --show drun
+   bind = $mod, V, exec, cliphist list | wofi --dmenu | cliphist decode | wl-copy
+   bind = $mod, S, exec, wofi --show drun
    bind = $mod, O, togglesplit, # dwindle
    bind = $mod, F, fullscreen
 
