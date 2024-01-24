@@ -53,7 +53,10 @@ in
     };
   };
 
-  desktops.hyprland.enable = true;
+  desktops.hyprland = {
+    enable = true;
+    wallpaper = ../wallpapers/whispers_muta.png;
+  };
 
   # TODO: Set your username
   home = {
