@@ -8,6 +8,7 @@
   imports = [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
       ../../modules/vm.nix
+      ../../modules/yubikey-access.nix
       ../common/global
       inputs.home-manager.nixosModules.default
     ];
@@ -117,12 +118,11 @@
 
 
   # aditional software
-  services.udev.packages = [pkgs.yubikey-personalization pkgs.logitech-udev-rules ];
+  services.udev.packages = [ pkgs.logitech-udev-rules ];
 
   environment.systemPackages = with pkgs; [
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
-    yubikey-manager
     pinentry-curses
     libfido2
     pciutils
@@ -195,8 +195,6 @@
     ];
   };
 
-  # due yubikey
-  programs.ssh.startAgent = false;
 
   # Docker
   virtualisation.docker.enable = true;
@@ -206,8 +204,7 @@
   # Enable the OpenSSH daemon.
   services.openssh.enable = true;
 
-  # required for yubikey
-  services.pcscd.enable = true;
+  services.yubikey-access.enable = true;
 
   # home-manager
   home-manager = {
