@@ -6,11 +6,13 @@
 
 {
   imports = [ # Include the results of the hardware scan.
+      inputs.home-manager.nixosModules.default
+
       ./hardware-configuration.nix
+      ../common/global
       ../../modules/vm.nix
       ../../modules/yubikey-access.nix
-      ../common/global
-      inputs.home-manager.nixosModules.default
+      ../../modules/lact-radeon.nix
     ];
 
 
@@ -142,28 +144,12 @@
     })
     jetbrains.idea-community
     jetbrains.pycharm-community
-    lact
-    gamescope
     obs-studio
     #k3s
     #kubernetes-helm
   ];
 
-  systemd.services.lact = {
-    enable = true;
-    description = "Radeon GPU";
-    after = ["syslog.target" "systemd-modules-load.service" ];
-
-    unitConfig = { ConditionPathExists = "${pkgs.lact}/bin/lact"; };
-
-    serviceConfig = {
-      User = "root";
-      ExecStart = "${pkgs.lact}/bin/lact daemon";
-    };
-
-    wantedBy = [ "multi-user.target" ];
-  };
-
+  services.lact.enable = true;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
