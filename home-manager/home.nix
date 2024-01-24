@@ -17,39 +17,29 @@ let
 
 in
   {
-  # You can import other home-manager modules here
   imports = [
     # If you want to use home-manager modules from other flakes (such as nix-colors):
     # inputs.nix-colors.homeManagerModule
 
-    # You can also split up your configuration and import pieces of it here:
-    # ./nvim.nix
+    ./common
+    ./hyprland
+  ];
 
-      ./hyprland
-  ] ++ import ./common;
+  home = {
+    username = "nclaud";
+    homeDirectory = "/home/nclaud";
+  };
+
+  programs.home-manager.enable = true;
 
   nixpkgs = {
-    # You can add overlays here
     overlays = [
       inputs.unison-nix.overlay
       postman_overlay
-      # If you want to use overlays exported from other flakes:
-      # neovim-nightly-overlay.overlays.default
-
-      # Or define it inline, for example:
-      # (final: prev: {
-      #   hi = final.hello.overrideAttrs (oldAttrs: {
-      #     patches = [ ./change-hello-to-hi.patch ];
-      #   });
-      # })
     ];
-    # Configure your nixpkgs instance
     config = {
-      # Disable if you don't want unfree packages
       allowUnfree = true;
-      # Workaround for https://github.com/nix-community/home-manager/issues/2942
       allowUnfreePredicate = (_: true);
-      permittedInsecurePackages = ["electron-24.8.6" "electron-25.9.0"];
     };
   };
 
@@ -58,24 +48,24 @@ in
     wallpaper = ../wallpapers/whispers_muta.png;
   };
 
-  # TODO: Set your username
-  home = {
-    username = "nclaud";
-    homeDirectory = "/home/nclaud";
-  };
-
-  # Add stuff for your user as you see fit:
-  # programs.neovim.enable = true;
-  home.packages = with pkgs; [ firefox librewolf lazydocker lazygit bottom logseq libreoffice insomnia unison-ucm yuzu-ea vscode-fhs postman mangohud  (vivaldi.override {
-        proprietaryCodecs = true; 
-        enableWidevine = true;
-        widevine-cdm = pkgs.widevine-cdm;
-        vivaldi-ffmpeg-codecs = pkgs.vivaldi-ffmpeg-codecs;
-      }) aichat foliate gh mpv jq ];
-
-  # Enable home-manager and git
-  programs.home-manager.enable = true;
-  programs.git.enable = true;
+  home.packages = with pkgs; [ 
+    aichat
+    bottom
+    firefox
+    foliate
+    gh
+    insomnia
+    jq
+    lazydocker
+    lazygit
+    libreoffice
+    librewolf
+    logseq
+    mpv
+    postman
+    unison-ucm
+    vscode-fhs 
+  ];
 
   # Nicely reload system units when changing configs
   # systemd.user.startServices = "sd-switch";

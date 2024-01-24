@@ -13,6 +13,7 @@ in {
     wallpaper = mkOption {
       default = ../../wallpapers/wallpaper1.jpg;
       description = "";
+      type = types.path;
     };
   };
 

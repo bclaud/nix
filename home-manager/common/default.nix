@@ -1,13 +1,15 @@
-[ 
-    ./direnv
-    ./fish
-    ./git
-    ./nvim
-    ./wezterm
-    ./vscodium
-    ./zellij
-    ./foot
-    ./kotlin
-    ./mangohud
-]
-
+{ ... }:
+{
+    imports = [
+        ./direnv
+        ./fish
+        ./git
+        ./nvim
+        ./wezterm
+        ./vscodium
+        ./zellij
+        ./foot
+        ./kotlin
+        ./mangohud
+    ];
+}
