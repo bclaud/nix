@@ -53,6 +53,8 @@ in
     };
   };
 
+  desktops.hyprland.enable = true;
+
   # TODO: Set your username
   home = {
     username = "nclaud";

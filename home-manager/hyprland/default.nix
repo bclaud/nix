@@ -1,12 +1,21 @@
-{pkgs, inputs, ...}:
-    let 
-        grimblast = inputs.hyprwm-contrib.packages.${pkgs.system}.grimblast;
-        grimblastBin = "${grimblast}/bin/grimblast";
-    in
-    {
+{config, lib, pkgs, inputs, ...}:
+with lib;
+let 
+  grimblast = inputs.hyprwm-contrib.packages.${pkgs.system}.grimblast;
+  grimblastBin = "${grimblast}/bin/grimblast";
+
+  cfg = config.desktops.hyprland;
+in {
+
+  options.desktops.hyprland = {
+    enable = mkEnableOption "Hyprland as Window manager with essential tools as whole desktop environment";
+  };
+
+  config = mkIf cfg.enable {
+
      # not well configured dependencies (should not be at PATH IMO)
      #wayland stuff
-     home.packages = with pkgs; [ gnome.nautilus pavucontrol wl-clipboard mako grimblast hyprpaper cliphist wl-clip-persist ];
+     home.packages = with pkgs; [ gnome.nautilus pavucontrol wl-clipboard mako grimblast hyprpaper cliphist wl-clip-persist pamixer ];
 
      home.sessionVariables = {
        MOZ_ENABLE_WAYLAND = 1;
@@ -15,8 +24,8 @@
      };
 
      xdg.configFile."hypr/hyprpaper.conf".text = ''
-       preload = ${../../wallpapers/wallpaper1.jpg}
-       wallpaper =  DP-2,${../../wallpapers/wallpaper1.jpg}
+     preload = ${../../wallpapers/wallpaper1.jpg}
+     wallpaper =  DP-2,${../../wallpapers/wallpaper1.jpg}
      '';
 
      # screensharing
@@ -68,11 +77,11 @@
                format-disconnected = "";
                tooltip = true;
                tooltip-format = ''
-                 {ifname}
-                 {ipaddr}/{cidr}
-                 Up: {bandwidthUpBits}
-                 Down: {bandwidthDownBits}'';
-               };
+               {ifname}
+               {ipaddr}/{cidr}
+               Up: {bandwidthUpBits}
+               Down: {bandwidthDownBits}'';
+             };
 
              pulseaudio = {
                format = "{icon} {volume}%";
@@ -91,7 +100,7 @@
                  default = [ "" "" "" ];
                };
                scroll-step = 5.0;
-               on-click = "${pkgs.pamixer}/bin/pamixer --toggle-mute";
+               on-click = "pamixer --toggle-mute";
                on-click-right = "pavucontrol";
                smooth-scrolling-threshold = 1;
              };
@@ -145,9 +154,9 @@
      layout = dwindle
      resize_on_border = true
 
-     }
+   }
 
-     decoration {
+   decoration {
      # See https://wiki.hyprland.org/Configuring/Variables/ for more
 
      rounding = 6
@@ -156,9 +165,9 @@
      shadow_range = 4
      shadow_render_power = 3
      col.shadow = rgba(1a1a1aee)
-     }
+   }
 
-     animations {
+   animations {
      enabled = yes
 
 
@@ -174,46 +183,47 @@
      animation = borderangle, 1, 8, default
      animation = fade, 1, 7, default
      animation = workspaces, 1, 6, default
-     }
+   }
 
-     $mod = SUPERs
-  
-    bind = $mod, P, exec, ${grimblastBin} --notify copy output
-    bind = SHIFT + $mod, P, exec, ${grimblastBin} --notify copy area
-    bind = $mod, T, exec, foot
-    bind = $mod, B, exec, firefox
-    bind = $mod, C, killactive, 
-    bind = $mod, E, exec, nautilus
-    bind = $mod, V, exec, cliphist list | ${pkgs.wofi}/bin/wofi --dmenu | cliphist decode | wl-copy
-    bind = $mod, S, exec, ${pkgs.wofi}/bin/wofi --show drun
-    bind = $mod, O, togglesplit, # dwindle
-    bind = $mod, F, fullscreen
+   $mod = SUPERs
+
+   bind = $mod, P, exec, ${grimblastBin} --notify copy output
+   bind = SHIFT + $mod, P, exec, ${grimblastBin} --notify copy area
+   bind = $mod, T, exec, foot
+   bind = $mod, B, exec, firefox
+   bind = $mod, C, killactive, 
+   bind = $mod, E, exec, nautilus
+   bind = $mod, V, exec, cliphist list | ${pkgs.wofi}/bin/wofi --dmenu | cliphist decode | wl-copy
+   bind = $mod, S, exec, ${pkgs.wofi}/bin/wofi --show drun
+   bind = $mod, O, togglesplit, # dwindle
+   bind = $mod, F, fullscreen
 
     # Move focus with mod + arrow keys
     bind = $mod, l , movefocus, l
     bind = $mod, h, movefocus, r
     bind = $mod, k, movefocus, u
     bind = $mod, j, movefocus, d
-  
-     # workspaces
-    bind = $mod, N, workspace, 1
-    bind = $mod, M, workspace, 2
 
-      binds $mod + [shift +] {1..10} to [move to] workspace {1..10}
-      ${builtins.concatStringsSep "\n" (builtins.genList (
-         x: let
-           ws = let
-            c = (x + 1) / 10;
-           in
-             builtins.toString (x + 1 - (c * 10));
-         in ''
-           bind = $mod, ${ws}, workspace, ${toString (x + 1)}
-           bind = $mod SHIFT, ${ws}, movetoworkspace, ${toString (x + 1)}
-         ''
+     # workspaces
+     bind = $mod, N, workspace, 1
+     bind = $mod, M, workspace, 2
+
+     binds $mod + [shift +] {1..10} to [move to] workspace {1..10}
+     ${builtins.concatStringsSep "\n" (builtins.genList (
+       x: let
+         ws = let
+           c = (x + 1) / 10;
+         in
+         builtins.toString (x + 1 - (c * 10));
+       in ''
+       bind = $mod, ${ws}, workspace, ${toString (x + 1)}
+       bind = $mod SHIFT, ${ws}, movetoworkspace, ${toString (x + 1)}
+       ''
        )
        10)}
 
-    windowrulev2 = noborder, class:^(jetbrains-idea)(.*)$
+       windowrulev2 = noborder, class:^(jetbrains-idea)(.*)$
        '';
-    }
+     };
+   }
 
