@@ -109,16 +109,34 @@ in {
              spacing = 4;
              margin = null;
              fixed-center = true;
-             ipc = false;
+             ipc = true;
 
              modules-left = [ "hyprland/workspaces" ];
              modules-center = [ "clock" ];
              modules-right = [ 
+               "hyprland/language"
+               "keyboard-state"
                "network"
                "pulseaudio"
                "cpu"
                "memory"
              ];
+
+             "keyboard-state" = {
+                numlock= true;
+                capslock = true;
+                format= "{name} {icon}";
+                format-icons= {
+                  locked= "";
+                  unlocked= "";
+                };
+              };
+
+             "hyprland/language" = {
+              format = "  {}";
+#              format-en  = "English";
+#              format-br = "Portuguese";
+             };
 
              "hyprland/workspaces" = {
                format = "{name}";
@@ -168,7 +186,7 @@ in {
                interval = 2;
              };
              memory = {
-               format = "  {used:0.1f}G/{total:0.1f}G";
+               format = "  {used:0.2f}G/{total:0.2f}G";
                interval = 2;
              };
 
@@ -266,7 +284,7 @@ in {
 
     input {
       kb_layout = us,br
-      kb_options = grp:alt_shift_toggle
+      kb_options = grp:alt_space_toggle
     }
 
      # workspaces

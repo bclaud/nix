@@ -18,7 +18,12 @@ in
       enable = true;
       layout = "us";
       xkbVariant = "";
-      
+
+      # TODO something is enabling this option
+      displayManager.gdm.enable = false;
+      displayManager.sddm.enable = false;
+      displayManager.lightdm.enable = false;
+
       # TODO set video driver based on config
       videoDrivers = ["amdgpu"];
     };
