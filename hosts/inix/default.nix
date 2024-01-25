@@ -125,10 +125,7 @@
   environment.systemPackages = with pkgs; [
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
-    pinentry-curses
-    libfido2
     pciutils
-    kitty
     solaar
     (pkgs.buildFHSUserEnv {
       name = "idea-community";
@@ -144,9 +141,6 @@
     })
     jetbrains.idea-community
     jetbrains.pycharm-community
-    obs-studio
-    #k3s
-    #kubernetes-helm
   ];
 
   services.lact.enable = true;
@@ -199,14 +193,6 @@
       "nclaud" = import ../../home-manager/home.nix;
     };
   };
-
-  #k3s
-    # This is required so that pod can reach the API server (running on port 6443 by default)
-  networking.firewall.allowedTCPPorts = [ 6443 ];
-  #services.k3s= {
-  #  enable = false;
-  #  role = "server";
-  #};
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];

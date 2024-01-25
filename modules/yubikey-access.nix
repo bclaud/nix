@@ -10,7 +10,11 @@ in
 
   config = mkIf cfg.enable {
     services.udev.packages = [ pkgs.yubikey-personalization ];
-    environment.systemPackages  = [ pkgs.yubikey-manager ];
+    environment.systemPackages  = with pkgs;[ 
+      yubikey-manager 
+      pinentry-curses 
+      libfido2
+    ];
 
     programs.ssh.startAgent = false;
     services.pcscd.enable = true;
