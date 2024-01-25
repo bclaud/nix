@@ -11,6 +11,7 @@
       ./hardware-configuration.nix
       ../common/global
       ../../modules/vm.nix
+      ../../modules/solaar-logitech.nix
       ../../modules/yubikey-access.nix
       ../../modules/lact-radeon.nix
     ];
@@ -43,7 +44,7 @@
   time.timeZone = "America/Sao_Paulo";
 
   # Select internationalisation properties.
-  i18n.defaultLocale = "pt_BR.UTF-8";
+  i18n.defaultLocale = "en_US.UTF-8";
 
   i18n.extraLocaleSettings = {
     LC_ADDRESS = "pt_BR.UTF-8";
@@ -118,15 +119,10 @@
   # Allow unfree packages
   nixpkgs.config.allowUnfree = true;
 
-
-  # aditional software
-  services.udev.packages = [ pkgs.logitech-udev-rules ];
-
   environment.systemPackages = with pkgs; [
     vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
     pciutils
-    solaar
     (pkgs.buildFHSUserEnv {
       name = "idea-community";
       targetPkgs = pkgs: [ ];
@@ -144,6 +140,7 @@
   ];
 
   services.lact.enable = true;
+  services.solaarLogitech.enable = false;
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
