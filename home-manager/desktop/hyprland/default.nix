@@ -22,7 +22,7 @@ in {
     enable = mkEnableOption "Hyprland as Window manager with essential tools as whole desktop environment";
 
     wallpaper = mkOption {
-      default = ../../wallpapers/wallpaper1.jpg;
+      default = ../../../wallpapers/wallpaper1.jpg;
       description = "";
       type = types.path;
     };
@@ -41,8 +41,8 @@ in {
      };
 
      xdg.configFile."hypr/hyprpaper.conf".text = ''
-     preload = ${../../wallpapers/wallpaper1.jpg}
-     preload = ${../../wallpapers/whispers_muta.png}
+     preload = ${../../../wallpapers/wallpaper1.jpg}
+     preload = ${../../../wallpapers/whispers_muta.png}
      wallpaper = ,${cfg.wallpaper}
      '';
 

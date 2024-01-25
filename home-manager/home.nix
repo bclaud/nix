@@ -1,7 +1,7 @@
 # This is your home-manager configuration file
 # Use this to configure your home environment (it replaces ~/.config/nixpkgs/home.nix)
 
-{ inputs, lib, config, pkgs, ... }:
+{ inputs, lib, config, nixosConfig, pkgs, ... }:
 let
 
   postman_overlay = (final: prev: {
@@ -22,7 +22,7 @@ in
     # inputs.nix-colors.homeManagerModule
 
     ./common
-    ./hyprland
+    ./desktop/hyprland
   ];
 
   home = {
@@ -44,7 +44,7 @@ in
   };
 
   desktops.hyprland = {
-    enable = true;
+    enable = lib.mkIf (nixosConfig.claud.desktop == "hyprland") true;
     wallpaper = ../wallpapers/whispers_muta.png;
   };
 

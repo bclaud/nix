@@ -1,5 +1,5 @@
 {pkgs, ...}: {
-  home.packages = with pkgs; [ fzf unzip clang ripgrep fd cargo clang luajit nil nodejs xclip unison-ucm elixir gnumake ];
+  home.packages = with pkgs; [ fzf unzip clang ripgrep fd cargo clang luajit nil nodejs xclip unison-ucm elixir gnumake rnix-lsp ];
 
   home.sessionVariables = {
     EDITOR="nvim";

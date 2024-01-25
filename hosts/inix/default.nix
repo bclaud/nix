@@ -10,6 +10,7 @@
 
       ./hardware-configuration.nix
       ../common/global
+      ../../modules/desktop
       ../../modules/vm.nix
       ../../modules/solaar-logitech.nix
       ../../modules/yubikey-access.nix
@@ -17,15 +18,7 @@
     ];
 
 
-    environment = {
-      # TODO this is bothering me ._.
-      loginShellInit = ''
-         if [ "$(tty)" = "/dev/tty1" ]; then
-          exec Hyprland &> /dev/null
-         fi
-      '';
-    };
-
+  claud.desktop = "hyprland";
 
   networking = {
     hostName = "inix"; # Define your hostname.
@@ -60,8 +53,6 @@
 
 
   # Enable the X11 windowing system.
-  services.xserver.enable = true;
-  services.xserver.videoDrivers = ["amdgpu"];
 
   # Enable the GNOME Desktop Environment.
   services.xserver.displayManager.gdm.enable = false;
@@ -154,9 +145,7 @@
 
   environment = {
     variables = {
-      # WLR_BACKEND = "vulkan";
-      # WLR_RENDERER = "vulkan";
-      TZ = "America/Sao_Paulo"; # fix for firefox datetime ._.
+      TZ = "America/Sao_Paulo"; # fix for firefox datetime
     };
   };
 
@@ -185,7 +174,7 @@
 
   # home-manager
   home-manager = {
-    extraSpecialArgs = { inherit inputs; };
+    extraSpecialArgs = { nixosConfig = config; inherit inputs; };
     users = {
       "nclaud" = import ../../home-manager/home.nix;
     };
