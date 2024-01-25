@@ -52,20 +52,6 @@
   };
 
 
-  # Enable the X11 windowing system.
-
-  # Enable the GNOME Desktop Environment.
-  services.xserver.displayManager.gdm.enable = false;
-  services.xserver.displayManager.sddm.enable = false;
-  services.xserver.displayManager.lightdm.enable = false;
-  #services.xserver.desktopManager.gnome.enable = true;
-
-  # Configure keymap in X11
-  services.xserver = {
-    layout = "us";
-    xkbVariant = "";
-  };
-
   services.jellyfin = {
     enable = true;
     user = "nclaud";

@@ -262,6 +262,13 @@ in {
     bind = $mod, k, movefocus, u
     bind = $mod, j, movefocus, d
 
+    # Inputs
+
+    input {
+      kb_layout = us,br
+      kb_options = grp:alt_shift_toggle
+    }
+
      # workspaces
      bind = $mod, N, workspace, 1
      bind = $mod, M, workspace, 2

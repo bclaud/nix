@@ -3,6 +3,7 @@ with lib;
 {
   imports = [
     ./hyprland.nix
+    ./gnome.nix
   ];
 
   options.claud = {

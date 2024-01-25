@@ -14,12 +14,13 @@ in
       '';
     };
 
-    services.xserver.enable = true;
-    
-    # TODO set video driver based on config
-    services.xserver.videoDrivers = ["amdgpu"];
+    services.xserver = {
+      enable = true;
+      layout = "us";
+      xkbVariant = "";
+      
+      # TODO set video driver based on config
+      videoDrivers = ["amdgpu"];
+    };
   };
-
-
-
 }
