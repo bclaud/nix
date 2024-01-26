@@ -51,7 +51,12 @@
     fish.enable = true;
   };
 
-  virtualisation.docker.enable = true;
+  virtualisation = { 
+
+    docker.enable = true;
+
+    libvirtd.enable = true;
+  };
 
   environment = {
     shells = with pkgs; [ bash fish ];
