@@ -23,6 +23,7 @@ in
 
     ./common
     ./desktop/hyprland
+    ./features/gh.nix
   ];
 
   home = {
@@ -53,7 +54,6 @@ in
     bottom
     firefox
     foliate
-    gh
     insomnia
     jetbrains.idea-community
     jetbrains.pycharm-community
