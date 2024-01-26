@@ -14,18 +14,23 @@ in
       '';
     };
 
-    services.xserver = {
-      enable = true;
-      layout = "us";
-      xkbVariant = "";
+    services = {
+      xserver = {
+        enable = true;
+        layout = "us";
+        xkbVariant = "";
 
-      # TODO something is enabling this option
-      displayManager.gdm.enable = false;
-      displayManager.sddm.enable = false;
-      displayManager.lightdm.enable = false;
+        # TODO something is enabling this option
+        displayManager.gdm.enable = false;
+        displayManager.sddm.enable = false;
+        displayManager.lightdm.enable = false;
 
-      # TODO set video driver based on config
-      videoDrivers = ["amdgpu"];
+        # TODO set video driver based on config
+        videoDrivers = ["amdgpu"];
+
+      };
+
+      dbus.enable = true;
     };
 
     sound.enable = true;

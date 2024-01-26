@@ -1,9 +1,4 @@
-# Edit this configuration file to define what should be installed on
-# your system.  Help is available in the configuration.nix(5) man page
-# and in the NixOS manual (accessible by running ‘nixos-help’).
-
 { config, pkgs, inputs, ... }:
-
 {
   imports = [ # Include the results of the hardware scan.
       inputs.home-manager.nixosModules.default
@@ -18,41 +13,18 @@
     ];
 
 
-  claud.desktop = "hyprland";
-
-  networking = {
-    hostName = "inix"; # Define your hostname.
-    networkmanager.enable = true;
-    nameservers = [ "1.1.1.1" "1.0.0.1" "2606:4700:4700::1111" "2606:4700:4700::1001"];
+  claud = {
+    desktop = "hyprland";
   };
-
-  # Shell
-  programs.fish.enable = true;
-  users.defaultUserShell = pkgs.fish;
-  environment.shells = with pkgs; [ bash fish ];
-
-  # Change DNS
-
-  # Set your time zone.
-  time.timeZone = "America/Sao_Paulo";
-
-  # Select internationalisation properties.
-  i18n.defaultLocale = "en_US.UTF-8";
-
-  i18n.extraLocaleSettings = {
-    LC_ADDRESS = "pt_BR.UTF-8";
-    LC_IDENTIFICATION = "pt_BR.UTF-8";
-    LC_MEASUREMENT = "pt_BR.UTF-8";
-    LC_MONETARY = "pt_BR.UTF-8";
-    LC_NAME = "pt_BR.UTF-8";
-    LC_NUMERIC = "pt_BR.UTF-8";
-    LC_PAPER = "pt_BR.UTF-8";
-    LC_TELEPHONE = "pt_BR.UTF-8";
-    LC_TIME = "pt_BR.UTF-8";
-  };
-
 
   services = {
+
+    yubikeyAccess.enable = true;
+    lact.enable = true;
+    solaarLogitech.enable = false;
+
+    openssh.enable = true;
+
     jellyfin = {
       enable = true;
       user = "nclaud";
@@ -67,61 +39,84 @@
     i2p = {
       enable = false;
     };
+
   };
 
+  programs = {
+    gnupg.agent = {
+      enable = true;
+      enableSSHSupport = true;
+    };
 
-  users.users.nclaud = {
-    isNormalUser = true;
-    description = "nclaud";
-    extraGroups = [ "networkmanager" "wheel" ];
-    shell = pkgs.fish;
-    packages = with pkgs; [
-    ];
+    fish.enable = true;
   };
 
-  # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
-
-  environment.systemPackages = with pkgs; [
-    vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
-    wget
-    pciutils
-    (pkgs.buildFHSUserEnv {
-      name = "idea-community";
-      targetPkgs = pkgs: [ ];
-      multiPkgs = pkgs: [ pkgs.jetbrains.idea-community ];
-      runScript = "idea-community $*";
-    })
-    (pkgs.buildFHSUserEnv {
-      name = "pycharm-community";
-      targetPkgs = pkgs: [ ];
-      multiPkgs = pkgs: [ pkgs.jetbrains.pycharm-community ];
-      runScript = "pycharm-community $*";
-    })
-    jetbrains.idea-community
-    jetbrains.pycharm-community
-  ];
-
-  services.lact.enable = true;
-  services.solaarLogitech.enable = false;
-
-  # Some programs need SUID wrappers, can be configured further or are
-  # started in user sessions.
-  # programs.mtr.enable = true;
-  programs.gnupg.agent = {
-    enable = true;
-    enableSSHSupport = true;
-  };
-
-  services.dbus.enable = true;
+  virtualisation.docker.enable = true;
 
   environment = {
+    shells = with pkgs; [ bash fish ];
+
+    systemPackages = with pkgs; [
+      vim 
+      wget
+      pciutils
+      (pkgs.buildFHSUserEnv {
+        name = "idea-community";
+        targetPkgs = pkgs: [ ];
+        multiPkgs = pkgs: [ pkgs.jetbrains.idea-community ];
+        runScript = "idea-community $*";
+      })
+      (pkgs.buildFHSUserEnv {
+        name = "pycharm-community";
+        targetPkgs = pkgs: [ ];
+        multiPkgs = pkgs: [ pkgs.jetbrains.pycharm-community ];
+        runScript = "pycharm-community $*";
+      })
+      jetbrains.idea-community
+      jetbrains.pycharm-community
+    ];
+
     variables = {
       TZ = "America/Sao_Paulo"; # fix for firefox datetime
     };
   };
 
-  # fonts
+
+  networking = {
+    hostName = "inix"; # Define your hostname.
+    networkmanager.enable = true;
+    nameservers = [ "1.1.1.1" "1.0.0.1" "2606:4700:4700::1111" "2606:4700:4700::1001"];
+  };
+
+  users = {
+    defaultUserShell = pkgs.fish;
+
+    users.nclaud = {
+      isNormalUser = true;
+      description = "nclaud";
+      extraGroups = [ "networkmanager" "wheel" ];
+      shell = pkgs.fish;
+      packages = with pkgs; [
+      ];
+    };
+  };
+
+
+  time.timeZone = "America/Sao_Paulo";
+  i18n.defaultLocale = "en_US.UTF-8";
+  i18n.extraLocaleSettings = {
+    LC_ADDRESS = "pt_BR.UTF-8";
+    LC_IDENTIFICATION = "pt_BR.UTF-8";
+    LC_MEASUREMENT = "pt_BR.UTF-8";
+    LC_MONETARY = "pt_BR.UTF-8";
+    LC_NAME = "pt_BR.UTF-8";
+    LC_NUMERIC = "pt_BR.UTF-8";
+    LC_PAPER = "pt_BR.UTF-8";
+    LC_TELEPHONE = "pt_BR.UTF-8";
+    LC_TIME = "pt_BR.UTF-8";
+  };
+
+
 
   fonts = {
     packages = with pkgs; [
@@ -134,16 +129,6 @@
   };
 
 
-  # Docker
-  virtualisation.docker.enable = true;
-
-  # List services that you want to enable:
-
-  # Enable the OpenSSH daemon.
-  services.openssh.enable = true;
-
-  services.yubikey-access.enable = true;
-
   # home-manager
   home-manager = {
     extraSpecialArgs = { nixosConfig = config; inherit inputs; };
@@ -151,6 +136,8 @@
       "nclaud" = import ../../home-manager/home.nix;
     };
   };
+
+  nixpkgs.config.allowUnfree = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];

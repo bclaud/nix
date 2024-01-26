@@ -1,10 +1,10 @@
 {config, lib, pkgs, ...}:
 with lib;
 let 
-  cfg = config.services.yubikey-access;
+  cfg = config.services.yubikeyAccess;
 in 
 {
-  options.services.yubikey-access = {
+  options.services.yubikeyAccess = {
     enable = mkEnableOption "Support for authentication with yubikey including for ssh and GPG";
   };
 
