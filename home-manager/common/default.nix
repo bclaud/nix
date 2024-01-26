@@ -5,11 +5,9 @@
         ./fish
         ./git
         ./nvim
-        ./wezterm
         ./vscodium
         ./zellij
         ./foot
         ./kotlin
-        ./mangohud
     ];
 }
