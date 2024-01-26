@@ -46,7 +46,7 @@ in
 
   desktops.hyprland = {
     enable = lib.mkIf (nixosConfig.claud.desktop == "hyprland") true;
-    wallpaper = ../wallpapers/whispers_muta.png;
+    wallpaper = ../wallpapers/wallpaper1.jpg;
   };
 
   home.packages = with pkgs; [ 
