@@ -55,6 +55,8 @@ in
     foliate
     gh
     insomnia
+    jetbrains.idea-community
+    jetbrains.pycharm-community
     jq
     lazydocker
     lazygit

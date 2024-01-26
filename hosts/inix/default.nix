@@ -65,20 +65,6 @@
       vim 
       wget
       pciutils
-      (pkgs.buildFHSUserEnv {
-        name = "idea-community";
-        targetPkgs = pkgs: [ ];
-        multiPkgs = pkgs: [ pkgs.jetbrains.idea-community ];
-        runScript = "idea-community $*";
-      })
-      (pkgs.buildFHSUserEnv {
-        name = "pycharm-community";
-        targetPkgs = pkgs: [ ];
-        multiPkgs = pkgs: [ pkgs.jetbrains.pycharm-community ];
-        runScript = "pycharm-community $*";
-      })
-      jetbrains.idea-community
-      jetbrains.pycharm-community
     ];
 
     variables = {
