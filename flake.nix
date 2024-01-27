@@ -19,9 +19,13 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    unison-nix.url = "github:ceedubs/unison-nix";
-    unison-lang.follows = "nixpkgs";
 
+    unison-nix = {
+      url = "github:ceedubs/unison-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
+    nix-colors.url = "github:misterio77/nix-colors";
   };
 
   outputs = { nixpkgs, home-manager, hyprland, hyprwm-contrib, unison-nix, ... }@inputs: let

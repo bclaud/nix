@@ -55,7 +55,7 @@
 
     docker.enable = true;
 
-    libvirtd.enable = true;
+    libvirtd.enable = false;
   };
 
   environment = {
@@ -122,7 +122,11 @@
 
   # home-manager
   home-manager = {
-    extraSpecialArgs = { nixosConfig = config; inherit inputs; };
+    extraSpecialArgs = { 
+      nixosConfig = config;
+      inherit inputs; 
+    };
+
     users = {
       "nclaud" = import ../../home-manager/home.nix;
     };

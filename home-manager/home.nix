@@ -18,8 +18,7 @@ let
 in
   {
   imports = [
-    # If you want to use home-manager modules from other flakes (such as nix-colors):
-    # inputs.nix-colors.homeManagerModule
+    inputs.nix-colors.homeManagerModule
 
     ./common
     ./desktop/hyprland
@@ -30,6 +29,13 @@ in
     username = "nclaud";
     homeDirectory = "/home/nclaud";
   };
+
+  desktops.hyprland = {
+    enable = lib.mkIf (nixosConfig.claud.desktop == "hyprland") true;
+    wallpaper = ../wallpapers/wallpaper1.jpg;
+  };
+
+  colorScheme = inputs.nix-colors.colorSchemes.tokyo-city-dark;
 
   programs.home-manager.enable = true;
 
@@ -42,11 +48,6 @@ in
       allowUnfree = true;
       allowUnfreePredicate = (_: true);
     };
-  };
-
-  desktops.hyprland = {
-    enable = lib.mkIf (nixosConfig.claud.desktop == "hyprland") true;
-    wallpaper = ../wallpapers/wallpaper1.jpg;
   };
 
   home.packages = with pkgs; [ 
