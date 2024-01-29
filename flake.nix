@@ -29,6 +29,7 @@
   };
 
   outputs = { nixpkgs, home-manager, hyprland, hyprwm-contrib, unison-nix, ... }@inputs: let
+
     systems = [
       "aarch64-linux"
       "i686-linux"
@@ -37,11 +38,17 @@
       "x86_64-darwin"
     ];
 
-    forAllSystems = nixpkgs.lib.genAttrs systems;
+    pkgsFor = nixpkgs.lib.genAttrs systems (system: import nixpkgs {
+      inherit system;
+      config.allowUnfree = true;
+      allowUnfreePredicate = (_: true);
+      overlays = import ./overlays { inherit inputs; };
+    });
+
+    forEachSystem = f: nixpkgs.lib.genAttrs systems (system: f pkgsFor.${system});
+
   in {
 
-    packages = forAllSystems (system: import ./pkgs nixpkgs.legacyPackages.${system});
-    
     # NixOS configuration entrypoint
     # Available through 'nixos-rebuild --flake .#your-hostname'
     nixosConfigurations = {
@@ -49,6 +56,7 @@
       inix = nixpkgs.lib.nixosSystem {
         specialArgs = { inherit inputs; }; # Pass flake inputs to our config
         # > Our main nixos configuration file <
+        pkgs = pkgsFor.x86_64-linux;
         modules = [
           ./hosts/inix 
           inputs.home-manager.nixosModules.default

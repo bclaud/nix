@@ -1,19 +1,9 @@
 # This is your home-manager configuration file
 # Use this to configure your home environment (it replaces ~/.config/nixpkgs/home.nix)
 
-{ inputs, lib, config, nixosConfig, pkgs, ... }:
+{ inputs, lib, config, osConfig, pkgs, ... }:
 let
 
-  postman_overlay = (final: prev: {
-    postman = prev.postman.overrideAttrs (previousAttrs: {
-      version = "10.18.10";
-      src = pkgs.fetchurl {
-        url = "https://dl.pstmn.io/download/version/10.18.10/linux64";
-        name = "postman-10.18.10.tar.gz";
-        sha256 = "sha256-CAY9b2O+1vROUEfGRReZex9Sh5lb3sIC4TExVHRL6Vo=";
-      };
-    });
-  });
 
 in
   {
@@ -31,24 +21,13 @@ in
   };
 
   desktops.hyprland = {
-    enable = lib.mkIf (nixosConfig.claud.desktop == "hyprland") true;
+    enable = lib.mkIf (osConfig.claud.desktop == "hyprland") true;
     wallpaper = ../wallpapers/wallpaper1.jpg;
   };
 
   colorScheme = inputs.nix-colors.colorSchemes.tokyo-city-dark;
 
   programs.home-manager.enable = true;
-
-  nixpkgs = {
-    overlays = [
-      inputs.unison-nix.overlay
-      postman_overlay
-    ];
-    config = {
-      allowUnfree = true;
-      allowUnfreePredicate = (_: true);
-    };
-  };
 
   home.packages = with pkgs; [ 
     aichat

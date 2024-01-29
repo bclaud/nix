@@ -129,6 +129,8 @@
 
   # home-manager
   home-manager = {
+    useGlobalPkgs = true;
+
     extraSpecialArgs = { 
       nixosConfig = config;
       inherit inputs; 
@@ -138,8 +140,6 @@
       "nclaud" = import ../../home-manager/home.nix;
     };
   };
-
-  nixpkgs.config.allowUnfree = true;
 
   # Open ports in the firewall.
   # networking.firewall.allowedTCPPorts = [ ... ];
