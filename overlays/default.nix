@@ -2,5 +2,5 @@
 [
   inputs.unison-nix.overlay
 
-  import ./postman.nix 
+  (import ./postman.nix)
 ]
