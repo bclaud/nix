@@ -40,6 +40,13 @@
       enable = false;
     };
 
+    zerotierone = {
+      enable = true;
+      # To remove networks, use the ZeroTier CLI: zerotier-cli leave <network-id>
+      # TODO add secrets
+      # joinNetworks = [];
+    };
+
   };
 
   programs = {
