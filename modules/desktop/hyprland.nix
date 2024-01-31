@@ -17,8 +17,11 @@ in
     services = {
       xserver = {
         enable = true;
-        layout = "us";
-        xkbVariant = "";
+
+        xkb = {
+          layout = "us";
+          variant = "";
+        };
 
         # TODO something is enabling this option
         displayManager.gdm.enable = false;

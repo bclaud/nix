@@ -2,12 +2,13 @@
   description = "Your new nix config";
 
   inputs = {
-    # Nixpkgs
+
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
 
-    # Home manager
-    home-manager.url = "github:nix-community/home-manager/master";
-    home-manager.inputs.nixpkgs.follows = "nixpkgs";
+    home-manager = {
+      url = "github:nix-community/home-manager/master";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     hyprland = {
       url = "github:hyprwm/Hyprland";
@@ -19,6 +20,10 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    sops-nix = {
+      url = "github:Mic92/sops-nix";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     unison-nix = {
       url = "github:ceedubs/unison-nix";
@@ -26,9 +31,10 @@
     };
 
     nix-colors.url = "github:misterio77/nix-colors";
+
   };
 
-  outputs = { nixpkgs, home-manager, hyprland, hyprwm-contrib, unison-nix, ... }@inputs: let
+  outputs = { nixpkgs, home-manager, hyprland, hyprwm-contrib, unison-nix, sops-nix, ... }@inputs: let
 
     systems = [
       "aarch64-linux"
@@ -59,7 +65,8 @@
         pkgs = pkgsFor.x86_64-linux;
         modules = [
           ./hosts/inix 
-          inputs.home-manager.nixosModules.default
+          home-manager.nixosModules.default
+          sops-nix.nixosModules.sops
         ];
       };
     };
