@@ -15,7 +15,6 @@ let
 
   grimblast = inputs.hyprwm-contrib.packages.${pkgs.system}.grimblast;
   grimblastBin = "${grimblast}/bin/grimblast";
-
 in {
 
   options.desktops.hyprland = {
@@ -49,9 +48,18 @@ in {
      # screensharing
      xdg.portal = {
        enable = true;
-       extraPortals = [ inputs.hyprland.packages."${pkgs.system}".xdg-desktop-portal-hyprland pkgs.xdg-desktop-portal-gtk pkgs.xdg-desktop-portal-wlr ];
+       extraPortals = [ 
+         inputs.hyprland.packages."${pkgs.system}".xdg-desktop-portal-hyprland 
+         pkgs.xdg-desktop-portal-gtk
+         pkgs.xdg-desktop-portal-wlr 
+       ];
        configPackages = [ inputs.hyprland.packages."${pkgs.system}".hyprland ];
      };
+
+     gtk = {
+       enable = true;
+     };
+
 
      programs = {
 
