@@ -32,6 +32,7 @@ in
   home.packages = with pkgs; [ 
     aichat
     bottom
+    chromium
     firefox
     foliate
     insomnia
