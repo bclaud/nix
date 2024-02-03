@@ -35,9 +35,10 @@ in
     chromium
     firefox
     foliate
+    idea-community-fhs
     insomnia
-    jetbrains.idea-community
-    jetbrains.pycharm-community
+    #jetbrains.idea-community
+    #jetbrains.pycharm-community
     jq
     lazydocker
     lazygit
@@ -46,6 +47,7 @@ in
     logseq
     mpv
     postman
+    pycharm-community-fhs
     unison-ucm
     vscode-fhs 
   ];
