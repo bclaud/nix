@@ -364,6 +364,8 @@
 
   local lspc = require'lspconfig'
 
+  lspc.unison.setup{}
+
   lspc.nil_ls.setup{}
 
   lspc.elixirls.setup{
