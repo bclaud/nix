@@ -70,5 +70,12 @@
         ];
       };
     };
+
+    templates = {
+      elixir = {
+        path = ./templates/elixir;
+        description = "simple elixir template";
+      };
+    };
   };
 }
