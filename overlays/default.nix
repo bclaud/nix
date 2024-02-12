@@ -23,7 +23,14 @@
   })
 
   (final: prev: {
-    elixir-ls = (prev.elixir-ls.override {elixir = prev.beam.packages.erlang_26.elixir_1_16; });
+    elixir-ls = (prev.elixir-ls.override {elixir = prev.beam.packages.erlang_26.elixir_1_16; }).overrideAttrs (old: {
+      buildPhase = ''
+        runHook preBuild
+
+        mix do compile --no-deps-check, elixir_ls.release2
+        runHook postBuild
+      '';
+    });
   })
 
 
