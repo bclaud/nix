@@ -22,5 +22,9 @@
     });
   })
 
+  (final: prev: {
+    elixir-ls = (prev.elixir-ls.override {elixir = prev.beam.packages.erlang_26.elixir_1_16; });
+  })
+
 
 ]
