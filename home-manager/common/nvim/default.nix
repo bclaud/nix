@@ -1,5 +1,5 @@
 {pkgs, ...}: {
-  home.packages = with pkgs; [ fzf unzip clang ripgrep fd cargo clang luajit nil nodejs xclip unison-ucm elixir gnumake rnix-lsp ];
+  home.packages = with pkgs; [ fzf unzip clang ripgrep fd cargo clang luajit nil nodejs xclip unison-ucm gnumake rnix-lsp ];
 
   home.sessionVariables = {
     EDITOR="nvim";
@@ -29,6 +29,7 @@
       luasnip
       vim-nix
       unison
+      elixir-tools-nvim
 
       # not sure about mason
       #mason-lspconfig-nvim
@@ -362,16 +363,31 @@
     },
   }
 
+  local capabilities = require('cmp_nvim_lsp')
+
   local lspc = require'lspconfig'
 
   lspc.unison.setup{}
 
   lspc.nil_ls.setup{}
 
-  lspc.elixirls.setup{
-    cmd = { "${pkgs.elixir-ls}/bin/elixir-ls" },
-    on_attach = on_attach
-  }
+  elixirls = require("elixir.elixirls")
+
+  require("elixir").setup({
+    nextls = {enable = false},
+    credo = {enable = false},
+    elixirls = {
+      enable = true,
+      cmd = { "${pkgs.elixir-ls}/bin/elixir-ls" },
+      settings = elixirls.settings {
+        dialyzerEnabled = true,
+        fetchDeps = false,
+        enableTestLenses = true,
+        suggestSpecs = true,
+      },
+      on_attach = on_attach,
+    },
+  })
 
   lspc.ocamllsp.setup{}
 
