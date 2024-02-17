@@ -369,7 +369,9 @@
 
   lspc.unison.setup{}
 
-  lspc.nil_ls.setup{}
+  lspc.nil_ls.setup{
+    on_attach = on_attach,
+  }
 
   elixirls = require("elixir.elixirls")
 
@@ -399,16 +401,12 @@
   lspc.kotlin_language_server.setup{
     cmd = { "${pkgs.kotlin-language-server}/bin/kotlin-language-server" },
     filetypes = {"kotlin"},
-    -- root_dir = {root_pattern("settings.gradle")}
-  }
-
-  lspc.kotlin_language_server.setup{
-    cmd = { "${pkgs.kotlin-language-server}/bin/kotlin-language-server" },
-    filetypes = {"kotlin"},
+    on_attach = on_attach,
   }
 
   lspc.pyright.setup{
-    cmd = { "${pkgs.pyright}/bin/pyright-langserver", "--stdio" }
+    cmd = { "${pkgs.pyright}/bin/pyright-langserver", "--stdio" },
+    on_attach = on_attach,
   }
   '';
 }
