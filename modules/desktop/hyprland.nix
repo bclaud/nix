@@ -1,7 +1,8 @@
-{config, lib, ...}:
+{pkgs, config, lib, ...}:
 with lib;
 let 
   cfg = config.claud.desktop;
+  bluetoothEnabled = config.hardware.bluetooth.enable;
 in 
 {
 
@@ -37,7 +38,11 @@ in
     };
 
     sound.enable = true;
-    hardware.pulseaudio.enable = false;
+    hardware.pulseaudio ={
+      enable = false;
+      package = pkgs.pulseaudioFull;
+    };
+
     security.rtkit.enable = true;
     services.pipewire = {
       enable = true;

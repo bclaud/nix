@@ -49,11 +49,15 @@
       driSupport = true;
       driSupport32Bit = true;
       extraPackages = with pkgs; [ 
+        amdvlk
         rocmPackages.clr.icd
         rocmPackages.clr
         rocmPackages.rocm-smi
       ];
     };
+
+    bluetooth.enable = true;
+    bluetooth.powerOnBoot = true;
   };
 
 }
