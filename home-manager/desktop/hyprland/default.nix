@@ -404,26 +404,39 @@ in {
       kb_options = grp:alt_space_toggle
     }
 
-     # workspaces
-     bind = $mod, N, workspace, 1
-     bind = $mod, M, workspace, 2
+    # workspaces
+    bind = $mod, N, workspace, 1
+    bind = $mod, M, workspace, 2
 
-     binds $mod + [shift +] {1..10} to [move to] workspace {1..10}
-     ${builtins.concatStringsSep "\n" (builtins.genList (
-       x: let
-         ws = let
-           c = (x + 1) / 10;
-         in
-         builtins.toString (x + 1 - (c * 10));
-       in ''
-       bind = $mod, ${ws}, workspace, ${toString (x + 1)}
-       bind = $mod SHIFT, ${ws}, movetoworkspace, ${toString (x + 1)}
-       ''
-       )
-       10)}
+    # binds $mod + [shift +] {1..10} to [move to] workspace {1..10}
+    ${builtins.concatStringsSep "\n" (builtins.genList (
+      x: let
+        ws = let
+          c = (x + 1) / 10;
+        in
+        builtins.toString (x + 1 - (c * 10));
+      in ''
+      bind = $mod, ${ws}, workspace, ${toString (x + 1)}
+      bind = $mod SHIFT, ${ws}, movetoworkspace, ${toString (x + 1)}
+      ''
+      )
+      10)}
 
-       windowrulev2 = noborder, class:^(jetbrains-idea)(.*)$
-       '';
+    # -- Fix odd behaviors in IntelliJ IDEs --
+    #! Fix focus issues when dialogs are opened or closed
+    windowrulev2 = windowdance,class:^(jetbrains-.*)$,floating:1
+    #! Fix splash screen showing in weird places and prevent annoying focus takeovers
+    windowrulev2 = center,class:^(jetbrains-.*)$,title:^(splash)$,floating:1
+    windowrulev2 = nofocus,class:^(jetbrains-.*)$,title:^(splash)$,floating:1
+    windowrulev2 = noborder,class:^(jetbrains-.*)$,title:^(splash)$,floating:1
+
+    #! Center popups/find windows
+    windowrulev2 = center,class:^(jetbrains-.*)$,title:^( )$,floating:1
+    windowrulev2 = stayfocused,class:^(jetbrains-.*)$,title:^( )$,floating:1
+    windowrulev2 = noborder,class:^(jetbrains-.*)$,title:^( )$,floating:1
+    #! Disable window flicker when autocomplete or tooltips appear
+    windowrulev2 = nofocus,class:^(jetbrains-.*)$,title:^(win.*)$,floating:1
+    '';
      };
    }
 
