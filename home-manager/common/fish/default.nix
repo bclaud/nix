@@ -16,6 +16,11 @@ in
   programs.fish = {
     enable = true;
 
+    shellAbbrs = {
+      gc = "git checkout";
+      gcb = "git checkout -b";
+    };
+
     shellAliases = {
       mt = "mix test";
       g = "git";
@@ -36,9 +41,9 @@ in
     functions = {
       fish_greeting = "";
 
-      nix_run = "nix run nixpkgs#argv";
+      nix_run = "nix run nixpkgs#$argv";
 
-      nix_shell_fish = "nix shell nixpkgs#argv -c fish";
+      nix_shell_fish = "nix shell nixpkgs#$argv -c fish";
 
       pythonEnv = {
         description = "start a nix-shell with given python packages";
