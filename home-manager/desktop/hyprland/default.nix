@@ -402,6 +402,9 @@ in {
     input {
       kb_layout = us,br
       kb_options = grp:alt_space_toggle
+
+      follow_mouse = 1 #default
+      mouse_refocus = false
     }
 
     # workspaces
@@ -421,21 +424,8 @@ in {
       ''
       )
       10)}
-
-    # -- Fix odd behaviors in IntelliJ IDEs --
-    #! Fix focus issues when dialogs are opened or closed
-    windowrulev2 = windowdance,class:^(jetbrains-.*)$,floating:1
-    #! Fix splash screen showing in weird places and prevent annoying focus takeovers
-    windowrulev2 = center,class:^(jetbrains-.*)$,title:^(splash)$,floating:1
-    windowrulev2 = nofocus,class:^(jetbrains-.*)$,title:^(splash)$,floating:1
-    windowrulev2 = noborder,class:^(jetbrains-.*)$,title:^(splash)$,floating:1
-
-    #! Center popups/find windows
-    windowrulev2 = center,class:^(jetbrains-.*)$,title:^( )$,floating:1
-    windowrulev2 = stayfocused,class:^(jetbrains-.*)$,title:^( )$,floating:1
-    windowrulev2 = noborder,class:^(jetbrains-.*)$,title:^( )$,floating:1
-    #! Disable window flicker when autocomplete or tooltips appear
-    windowrulev2 = nofocus,class:^(jetbrains-.*)$,title:^(win.*)$,floating:1
+     windowrulev2 = forceinput,class:^(jetbrains-.*),title:^Select Methods to Override
+     windowrulev2 = windowdance,class:^(jetbrains-.*)
     '';
      };
    }
