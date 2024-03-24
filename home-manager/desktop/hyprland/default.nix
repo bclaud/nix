@@ -33,6 +33,32 @@ in {
      #wayland stuff
      home.packages = with pkgs; [ gnome.nautilus pavucontrol wl-clipboard mako grimblast hyprpaper cliphist wl-clip-persist pamixer ];
 
+     home.pointerCursor = {
+       gtk.enable = true;
+        # x11.enable = true;
+        package = pkgs.bibata-cursors;
+        name = "Bibata-Modern-Classic";
+        size = 16;
+      };
+
+      gtk = {
+        enable = true;
+        theme = {
+          package = pkgs.flat-remix-gtk;
+          name = "Flat-Remix-GTK-Grey-Darkest";
+        };
+
+        iconTheme = {
+          package = pkgs.gnome.adwaita-icon-theme;
+          name = "Adwaita";
+        };
+
+        font = {
+          name = "Sans";
+          size = 11;
+        };
+      };
+
      home.sessionVariables = {
        MOZ_ENABLE_WAYLAND = 1;
        QT_QPA_PLATFORM = "wayland";
@@ -49,17 +75,11 @@ in {
      xdg.portal = {
        enable = true;
        extraPortals = [ 
-         inputs.hyprland.packages."${pkgs.system}".xdg-desktop-portal-hyprland 
+         pkgs.xdg-desktop-portal-hyprland 
          pkgs.xdg-desktop-portal-gtk
-         pkgs.xdg-desktop-portal-wlr 
        ];
-       configPackages = [ inputs.hyprland.packages."${pkgs.system}".hyprland ];
+       configPackages = [ pkgs.hyprland ];
      };
-
-     gtk = {
-       enable = true;
-     };
-
 
      programs = {
 
@@ -324,7 +344,6 @@ in {
     };
 
      # hyprland config
-     wayland.windowManager.hyprland.enable = true;
      wayland.windowManager.hyprland.systemd.enable = true;
      wayland.windowManager.hyprland.extraConfig = ''
 

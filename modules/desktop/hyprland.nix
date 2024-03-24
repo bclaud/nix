@@ -7,6 +7,11 @@ in
 {
 
   config = mkIf (cfg == "hyprland") {
+    programs.hyprland.enable = true;
+
+    # Optional, hint electron apps to use wayland:
+    environment.sessionVariables.NIXOS_OZONE_WL = "1";
+
     environment = {
       loginShellInit = ''
          if [ "$(tty)" = "/dev/tty1" ]; then
