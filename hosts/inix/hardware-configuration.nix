@@ -10,10 +10,17 @@
 
   boot.initrd.availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod" ];
   boot.initrd.kernelModules = [ ];
+  boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.kernelModules = [ "kvm-intel" "amdgpu" ];
   boot.extraModulePackages = [ ];
 
+  # testing
+  boot.kernel.sysctl = {
+    "fs.inotify.max_user_watchers" = 2048000;
+  };
+
   boot.loader.systemd-boot.enable = true;
+  systemd.tmpfiles.rules = ["L+    /opt/rocm/hip   -    -    -     -    ${pkgs.rocmPackages.clr}"];
   boot.loader.efi.canTouchEfiVariables = true;
 
   fileSystems."/" =
@@ -50,14 +57,29 @@
       driSupport32Bit = true;
       extraPackages = with pkgs; [ 
         amdvlk
-        rocmPackages.clr.icd
-        rocmPackages.clr
-        rocmPackages.rocm-smi
+        libva
+        libvdpau-va-gl
+        rocm-opencl-icd
+        rocm-opencl-runtime
+        #rocmPackages.clr
+        #rocmPackages.clr.icd
+        #rocmPackages.hipblas
+        #rocmPackages.rocblas
+        #rocmPackages.rocm-comgr
+        #rocmPackages.rocm-runtime
+        #rocmPackages.rocm-smi
+        #rocmPackages.rocsolver
+        #rocmPackages.rocsparse
+        vaapiVdpau
       ];
     };
 
-    bluetooth.enable = true;
+    bluetooth.enable = false;
     bluetooth.powerOnBoot = true;
   };
 
+  # current 6600m doesn't support default gfx1032 afaik
+  environment.variables = { HSA_OVERRIDE_GFX_VERSION="10.3.0"; };
+
 }
+
