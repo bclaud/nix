@@ -15,6 +15,24 @@ let
 
   grimblast = inputs.hyprwm-contrib.packages.${pkgs.system}.grimblast;
   grimblastBin = "${grimblast}/bin/grimblast";
+
+  mod = "SUPER";
+  modshift = "${mod}SHIFT";
+
+  # binds $mod + [shift +] {1..10} to [move to] workspace {1..10} (stolen from fufie)
+  workspaces = builtins.concatLists (builtins.genList (
+    x: let
+      ws = let
+        c = (x + 1) / 10;
+      in
+      builtins.toString (x + 1 - (c * 10));
+    in [
+      "${mod}, ${ws}, workspace, ${toString (x + 1)}"
+      "${mod} SHIFT, ${ws}, movetoworkspace, ${toString (x + 1)}"
+    ]
+    )
+    10);
+
 in {
 
   options.desktops.hyprland = {
@@ -344,108 +362,78 @@ in {
     };
 
      # hyprland config
+     wayland.windowManager.hyprland.enable = true;
      wayland.windowManager.hyprland.systemd.enable = true;
-     wayland.windowManager.hyprland.extraConfig = ''
+     wayland.windowManager.hyprland.settings = {
+       windowrulev2 = [
+         "forceinput,class:^(jetbrains-.*),title:^Select Methods to Override"
+         "windowdance,class:^(jetbrains-.*)"
+       ];
 
-     exec-once=waybar
-     exec-once=mako
-     exec-once=hyprpaper
+       bind = [
+         "${mod},P,exec,${grimblastBin} --notify copy output"
+         "${modshift}, P, exec, ${grimblastBin} --notify copy area"
+         "${mod}, T, exec, foot"
+         "${mod}, B, exec, firefox"
+         "${mod}, C, killactive,"
+         "${mod}, E, exec, nautilus"
+         "${mod}, V, exec, cliphist list | wofi --dmenu | cliphist decode | wl-copy"
+         "${mod}, S, exec, wofi --show drun"
+         "${mod}, O, togglesplit," # dwindle
+         "${mod}, F, fullscreen"
 
-     exec-once = wl-paste --type text --watch cliphist store #Stores only text data
-     exec-once = wl-paste --type image --watch cliphist store #Stores only image data
+         "${mod}, l, movefocus, l"
+         "${mod}, h, movefocus, r"
+         "${mod}, k, movefocus, u"
+         "${mod}, j, movefocus, d"
+         "${mod}, N, workspace, 1"
+         "${mod}, M, workspace, 2"
 
-     general {
-     # See https://wiki.hyprland.org/Configuring/Variables/ for more
+       ] ++ workspaces;
 
-     gaps_in = 5
-     gaps_out = 20
-     border_size = 2
-     col.active_border = rgba(33ccffee) rgba(00ff99ee) 45deg
-     col.inactive_border = rgba(595959aa)
+       bindm = [
+         "${mod},mouse:272,movewindow"
+         "${mod},mouse:273,resizewindow"
+       ];
 
-     layout = dwindle
-     resize_on_border = true
+       exec-once = [
+         "waybar"
+         "mako"
+         "hyprpaper"
+         "wl-paste --type text --watch cliphist store"
+         "wl-paste --type image --watch cliphist store"
+       ];
 
-   }
+       input = {
 
-   decoration {
-     # See https://wiki.hyprland.org/Configuring/Variables/ for more
+         kb_layout = "us,br";
+         kb_options = "grp:alt_space_toggle";
 
-     rounding = 6
+         follow_mouse = 1;
+         mouse_refocus = false;
+       };
 
-     drop_shadow = yes
-     shadow_range = 4
-     shadow_render_power = 3
-     col.shadow = rgba(1a1a1aee)
-   }
+       general = {
 
-   animations {
-     enabled = yes
+         gaps_in = 5;
+         gaps_out = 20;
+         border_size = 2;
+         "col.active_border" = "rgba(33ccffee) rgba(00ff99ee) 45deg";
+         "col.inactive_border" = "rgba(595959aa)";
+       };
 
+       decoration = {
+         rounding = 6;
+         drop_shadow = true;
+         shadow_render_power = 3;
+         "col.shadow" = "rgba(1a1a1aee)";
+       };
 
-     # Autocompletion, etc, take hyprland focus
+       animations = {
+         enabled = true;
+       };
 
-     # Some default animations, see https://wiki.hyprland.org/Configuring/Animations/ for more
-
-     bezier = myBezier, 0.05, 0.9, 0.1, 1.05
-
-     animation = windows, 1, 7, myBezier
-     animation = windowsOut, 1, 7, default, popin 80%
-     animation = border, 1, 10, default
-     animation = borderangle, 1, 8, default
-     animation = fade, 1, 7, default
-     animation = workspaces, 1, 6, default
-   }
-
-   $mod = SUPERs
-
-   bind = $mod, P, exec, ${grimblastBin} --notify copy output
-   bind = SHIFT + $mod, P, exec, ${grimblastBin} --notify copy area
-   bind = $mod, T, exec, foot
-   bind = $mod, B, exec, firefox
-   bind = $mod, C, killactive, 
-   bind = $mod, E, exec, nautilus
-   bind = $mod, V, exec, cliphist list | wofi --dmenu | cliphist decode | wl-copy
-   bind = $mod, S, exec, wofi --show drun
-   bind = $mod, O, togglesplit, # dwindle
-   bind = $mod, F, fullscreen
-
-    # Move focus with mod + arrow keys
-    bind = $mod, l , movefocus, l
-    bind = $mod, h, movefocus, r
-    bind = $mod, k, movefocus, u
-    bind = $mod, j, movefocus, d
-
-    # Inputs
-
-    input {
-      kb_layout = us,br
-      kb_options = grp:alt_space_toggle
-
-      follow_mouse = 1 #default
-      mouse_refocus = false
-    }
-
-    # workspaces
-    bind = $mod, N, workspace, 1
-    bind = $mod, M, workspace, 2
-
-    # binds $mod + [shift +] {1..10} to [move to] workspace {1..10}
-    ${builtins.concatStringsSep "\n" (builtins.genList (
-      x: let
-        ws = let
-          c = (x + 1) / 10;
-        in
-        builtins.toString (x + 1 - (c * 10));
-      in ''
-      bind = $mod, ${ws}, workspace, ${toString (x + 1)}
-      bind = $mod SHIFT, ${ws}, movetoworkspace, ${toString (x + 1)}
-      ''
-      )
-      10)}
-     windowrulev2 = forceinput,class:^(jetbrains-.*),title:^Select Methods to Override
-     windowrulev2 = windowdance,class:^(jetbrains-.*)
-    '';
      };
-   }
+    };
+  }
 
