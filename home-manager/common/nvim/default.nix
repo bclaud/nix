@@ -1,5 +1,5 @@
 {pkgs, ...}: {
-  home.packages = with pkgs; [ fzf unzip clang ripgrep fd cargo clang luajit nil nodejs xclip unison-ucm gnumake rnix-lsp ];
+  home.packages = with pkgs; [ fzf unzip clang ripgrep fd cargo clang luajit nil nodejs xclip unison-ucm gnumake ];
 
   home.sessionVariables = {
     EDITOR="nvim";
@@ -363,14 +363,18 @@
     },
   }
 
-  local capabilities = require('cmp_nvim_lsp')
+  local capabilities = require('cmp_nvim_lsp').default_capabilities()
+
 
   local lspc = require'lspconfig'
 
-  lspc.unison.setup{}
+  lspc.unison.setup{
+    on_attach = on_attach,
+  }
 
   lspc.nil_ls.setup{
     on_attach = on_attach,
+    capabilities = capabilities,
   }
 
   elixirls = require("elixir.elixirls")
@@ -388,25 +392,33 @@
         suggestSpecs = true,
       },
       on_attach = on_attach,
+      capabilities = capabilities,
     },
   })
 
-  lspc.ocamllsp.setup{}
+
+  lspc.ocamllsp.setup{
+    on_attach = on_attach,
+    capabilities = capabilities,
+  }
 
   lspc.lua_ls.setup{
-    -- this crappy 
-    cmd = { "${pkgs.lua-language-server}/bin/lua_language_server" }
+    cmd = { "${pkgs.lua-language-server}/bin/lua_language_server" },
+    on_attach = on_attach,
+    capabilities = capabilities,
   }
 
   lspc.kotlin_language_server.setup{
     cmd = { "${pkgs.kotlin-language-server}/bin/kotlin-language-server" },
     filetypes = {"kotlin"},
     on_attach = on_attach,
+    capabilities = capabilities,
   }
 
   lspc.pyright.setup{
     cmd = { "${pkgs.pyright}/bin/pyright-langserver", "--stdio" },
     on_attach = on_attach,
+    capabilities = capabilities,
   }
   '';
 }
