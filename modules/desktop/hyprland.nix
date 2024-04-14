@@ -21,6 +21,9 @@ in
     };
 
     services = {
+        # TODO something is enabling this option
+      displayManager.sddm.enable = false;
+
       xserver = {
         enable = true;
 
@@ -29,10 +32,8 @@ in
           variant = "";
         };
 
-        # TODO something is enabling this option
-        displayManager.gdm.enable = false;
-        displayManager.sddm.enable = false;
         displayManager.lightdm.enable = false;
+        displayManager.gdm.enable = false;
 
         # TODO set video driver based on config
         videoDrivers = ["amdgpu"];

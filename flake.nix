@@ -10,11 +10,6 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    hyprland = {
-      url = "github:hyprwm/Hyprland";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     hyprwm-contrib= {
       url = "github:hyprwm/contrib";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -34,7 +29,7 @@
 
   };
 
-  outputs = { nixpkgs, home-manager, hyprland, hyprwm-contrib, unison-nix, sops-nix, ... }@inputs: let
+  outputs = { nixpkgs, home-manager, hyprwm-contrib, unison-nix, sops-nix, ... }@inputs: let
 
     systems = [
       "aarch64-linux"

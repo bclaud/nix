@@ -62,7 +62,7 @@
 
     docker.enable = true;
 
-    libvirtd.enable = false;
+    libvirtd.enable = true;
   };
 
   environment = {
