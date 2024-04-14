@@ -407,7 +407,7 @@ in {
        input = {
 
          kb_layout = "us,br";
-         kb_options = "grp:alt_space_toggle";
+         kb_options = "grp:alt_space_toggle,caps:swapescape";
 
          follow_mouse = 1;
          mouse_refocus = false;
