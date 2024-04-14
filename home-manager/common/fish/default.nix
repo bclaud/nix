@@ -9,7 +9,6 @@ in
 {
   home.packages = with pkgs; [
     fd 
-    fzf
     ripgrep
     ];
 
@@ -63,6 +62,10 @@ in
 
     };
 
+    plugins = [
+      {name = "sponge"; src = pkgs.fishPlugins.sponge.src;}
+    ];
+
     # TODO this should be handled by yubikey-agent
     interactiveShellInit = ''
       set -x GPG_TTY (tty)
@@ -74,6 +77,11 @@ in
   programs.starship.enable = true;
 
   programs.zoxide = {
+    enable = true;
+    enableFishIntegration = true;
+  };
+
+  programs.fzf = {
     enable = true;
     enableFishIntegration = true;
   };
