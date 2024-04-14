@@ -15,7 +15,6 @@
       nvim-lspconfig
       nvim-cmp
       kotlin-vim
-      #(nvim-treesitter.withPlugins (_: pkgs.tree-sitter.allGrammars))
       nvim-treesitter.withAllGrammars
       nvim-treesitter-context
       nvim-treesitter-endwise
@@ -30,6 +29,8 @@
       vim-nix
       unison
       elixir-tools-nvim
+
+      nvim-autopairs
 
       # not sure about mason
       #mason-lspconfig-nvim
@@ -48,6 +49,9 @@
       telescope-nvim
       telescope-file-browser-nvim
       plenary-nvim
+
+      #File explorer
+      oil-nvim
 
     ];
     extraPackages = with pkgs; [ nil elixir-ls lua-language-server kotlin-language-server nodePackages.pyright ];
@@ -146,6 +150,7 @@
   -- Enable `lukas-reineke/indent-blankline.nvim`
   -- For version 3, see :help ibl.setup()
   -- See `:help indent_blankline.txt`
+  require("ibl").setup()
   
   -- Gitsigns
   -- See `:help gitsigns.txt`
@@ -158,6 +163,9 @@
       changedelete = { text = '~' },
     },
   }
+  
+  -- [[ Configure Autopairs ]]
+  require('nvim-autopairs').setup()
 
   -- [[ Configure Telescope ]]
   -- See `:help telescope` and `:help telescope.setup()`
@@ -171,6 +179,11 @@
       },
     },
   }
+
+  -- OIL NVIM
+  require("oil").setup()
+  vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
+
 
   -- Enable telescope fzf native, if installed
   pcall(require('telescope').load_extension, 'fzf')
@@ -362,6 +375,12 @@
       { name = 'luasnip' },
     },
   }
+
+  local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+  cmp.event:on(
+    'confirm_done',
+    cmp_autopairs.on_confirm_done()
+    )
 
   local capabilities = require('cmp_nvim_lsp').default_capabilities()
 
