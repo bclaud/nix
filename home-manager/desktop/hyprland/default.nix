@@ -270,12 +270,12 @@ in {
         settings = {
           "bar" = {
             layer = "top";
-            position = "top";
+            position = "bottom";
             height = 50;
             width = null;
             exclusive = true;
             passthrough = false;
-            spacing = 4;
+            spacing = 5;
             margin = null;
             fixed-center = true;
             ipc = false;
@@ -374,20 +374,20 @@ in {
          "${mod},P,exec,${grimblastBin} --notify copy output"
          "${modshift}, P, exec, ${grimblastBin} --notify copy area"
          "${mod}, T, exec, foot"
-         "${mod}, B, exec, firefox"
+         "${mod}, B, exec, chromium"
          "${mod}, C, killactive,"
          "${mod}, E, exec, nautilus"
          "${mod}, V, exec, cliphist list | wofi --dmenu | cliphist decode | wl-copy"
          "${mod}, S, exec, wofi --show drun"
-         "${mod}, O, togglesplit," # dwindle
          "${mod}, F, fullscreen"
 
          "${mod}, l, movefocus, l"
          "${mod}, h, movefocus, r"
          "${mod}, k, movefocus, u"
          "${mod}, j, movefocus, d"
-         "${mod}, N, workspace, 1"
-         "${mod}, M, workspace, 2"
+         "${mod}, O, workspace, 1"
+         "${mod}, N, workspace, 2"
+         "${mod}, M, workspace, 3"
 
        ] ++ workspaces;
 
