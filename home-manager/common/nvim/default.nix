@@ -5,7 +5,7 @@
     EDITOR="nvim";
   };
 
-  programs.neovim= {
+  programs.neovim = {
     enable = true;
     defaultEditor = true;
     plugins = with pkgs.vimPlugins; [
@@ -50,11 +50,12 @@
       telescope-file-browser-nvim
       plenary-nvim
 
-      #File explorer
+      #File explorer and navigation
       oil-nvim
-
+      harpoon2
     ];
-    extraPackages = with pkgs; [ nil elixir-ls lua-language-server kotlin-language-server nodePackages.pyright ];
+
+    extraPackages = with pkgs; [ nil elixir-ls lua-language-server kotlin-language-server nodePackages.pyright zls];
   };
 
   xdg.configFile."nvim/init.lua".text = ''
@@ -184,6 +185,48 @@
   require("oil").setup()
   vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
 
+    -- Harpoon
+  local harpoon = require("harpoon")
+
+  -- REQUIRED
+  harpoon:setup()
+  -- REQUIRED
+
+  vim.keymap.set("n", "<leader>ah", function() harpoon:list():add() end)
+  vim.keymap.set("n", "<C-e>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
+
+  vim.keymap.set("n", "<C-h>", function() harpoon:list():select(1) end)
+  vim.keymap.set("n", "<C-t>", function() harpoon:list():select(2) end)
+  vim.keymap.set("n", "<C-n>", function() harpoon:list():select(3) end)
+  vim.keymap.set("n", "<C-s>", function() harpoon:list():select(4) end)
+
+  -- Toggle previous & next buffers stored within Harpoon list
+  vim.keymap.set("n", "<C-S-P>", function() harpoon:list():prev() end)
+  vim.keymap.set("n", "<C-S-N>", function() harpoon:list():next() end)
+
+  -- Toggle previous & next buffers stored within Harpoon list
+  vim.keymap.set("n", "<C-S-P>", function() harpoon.list().prev() end)
+
+  -- basic telescope configuration
+  local conf = require("telescope.config").values
+  local function toggle_telescope(harpoon_files)
+      local file_paths = {}
+      for _, item in ipairs(harpoon_files.items) do
+          table.insert(file_paths, item.value)
+      end
+
+      require("telescope.pickers").new({}, {
+          prompt_title = "Harpoon",
+          finder = require("telescope.finders").new_table({
+              results = file_paths,
+          }),
+          previewer = conf.file_previewer({}),
+          sorter = conf.generic_sorter({}),
+      }):find()
+  end
+
+  vim.keymap.set("n", "<C-e>", function() toggle_telescope(harpoon:list()) end,
+      { desc = "Open harpoon window" })
 
   -- Enable telescope fzf native, if installed
   pcall(require('telescope').load_extension, 'fzf')
@@ -438,6 +481,10 @@
     cmd = { "${pkgs.pyright}/bin/pyright-langserver", "--stdio" },
     on_attach = on_attach,
     capabilities = capabilities,
+  }
+
+  lspc.zls.setup{
+    on_attach = on_attach,
   }
   '';
 }
