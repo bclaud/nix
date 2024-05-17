@@ -52,7 +52,7 @@
 
       #File explorer and navigation
       oil-nvim
-      harpoon2
+      grapple-nvim
     ];
 
     extraPackages = with pkgs; [ nil elixir-ls lua-language-server kotlin-language-server nodePackages.pyright zls];
@@ -185,48 +185,13 @@
   require("oil").setup()
   vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
 
-    -- Harpoon
-  local harpoon = require("harpoon")
+  -- Grapple
+  vim.keymap.set("n", "<leader>m", require("grapple").toggle)
+  vim.keymap.set("n", "<leader>M", "<cmd>Telescope grapple tags<cr>")
 
-  -- REQUIRED
-  harpoon:setup()
-  -- REQUIRED
-
-  vim.keymap.set("n", "<leader>ah", function() harpoon:list():add() end)
-  vim.keymap.set("n", "<C-e>", function() harpoon.ui:toggle_quick_menu(harpoon:list()) end)
-
-  vim.keymap.set("n", "<C-h>", function() harpoon:list():select(1) end)
-  vim.keymap.set("n", "<C-t>", function() harpoon:list():select(2) end)
-  vim.keymap.set("n", "<C-n>", function() harpoon:list():select(3) end)
-  vim.keymap.set("n", "<C-s>", function() harpoon:list():select(4) end)
-
-  -- Toggle previous & next buffers stored within Harpoon list
-  vim.keymap.set("n", "<C-S-P>", function() harpoon:list():prev() end)
-  vim.keymap.set("n", "<C-S-N>", function() harpoon:list():next() end)
-
-  -- Toggle previous & next buffers stored within Harpoon list
-  vim.keymap.set("n", "<C-S-P>", function() harpoon.list().prev() end)
-
-  -- basic telescope configuration
-  local conf = require("telescope.config").values
-  local function toggle_telescope(harpoon_files)
-      local file_paths = {}
-      for _, item in ipairs(harpoon_files.items) do
-          table.insert(file_paths, item.value)
-      end
-
-      require("telescope.pickers").new({}, {
-          prompt_title = "Harpoon",
-          finder = require("telescope.finders").new_table({
-              results = file_paths,
-          }),
-          previewer = conf.file_previewer({}),
-          sorter = conf.generic_sorter({}),
-      }):find()
-  end
-
-  vim.keymap.set("n", "<C-e>", function() toggle_telescope(harpoon:list()) end,
-      { desc = "Open harpoon window" })
+  -- User command
+  vim.keymap.set("n", "<leader>1", "<cmd>Grapple select index=1<cr>")
+  require("telescope").load_extension("grapple")
 
   -- Enable telescope fzf native, if installed
   pcall(require('telescope').load_extension, 'fzf')
