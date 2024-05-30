@@ -17,6 +17,11 @@
     desktop = "hyprland";
   };
 
+  sops.defaultSopsFile = ../../secrets/secrets.yaml;
+  sops.defaultSopsFormat = "yaml";
+  sops.age.keyFile = "/home/nclaud/.config/sops/age/keys.txt";
+  sops.secrets.github-token = { };
+
   services = {
 
     yubikeyAccess.enable = true;
