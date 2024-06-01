@@ -164,6 +164,7 @@
         experimental-features = [ "nix-command" "flakes" "repl-flake" ];
         auto-optimise-store = true;
         trusted-users = [ "nclaud" ];
+        access-tokens = [ config.sops.secrets.github-token.path ];
       };
     };
 }
