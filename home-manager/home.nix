@@ -48,7 +48,7 @@ in
     mpv
     postman
     pycharm-community-fhs
-    unison-ucm
+    scrcpy
     vscode-fhs 
   ];
 

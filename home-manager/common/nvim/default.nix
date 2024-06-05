@@ -1,5 +1,5 @@
 {pkgs, ...}: {
-  home.packages = with pkgs; [ fzf unzip clang ripgrep fd cargo clang luajit nil nodejs xclip unison-ucm gnumake ];
+  home.packages = with pkgs; [ fzf unzip clang ripgrep fd cargo clang luajit nil nodejs xclip gnumake ];
 
   home.sessionVariables = {
     EDITOR="nvim";
@@ -27,7 +27,6 @@
       fidget-nvim
       luasnip
       vim-nix
-      unison
       elixir-tools-nvim
 
       nvim-autopairs
@@ -53,6 +52,8 @@
       #File explorer and navigation
       oil-nvim
       grapple-nvim
+
+      nvim-web-devicons
     ];
 
     extraPackages = with pkgs; [ nil elixir-ls lua-language-server kotlin-language-server nodePackages.pyright zls];
@@ -395,10 +396,6 @@
 
   local lspc = require'lspconfig'
 
-  lspc.unison.setup{
-    on_attach = on_attach,
-  }
-
   lspc.nil_ls.setup{
     on_attach = on_attach,
     capabilities = capabilities,
@@ -422,7 +419,8 @@
       capabilities = capabilities,
     },
   })
-
+  
+  lspc.gleam.setup{}
 
   lspc.ocamllsp.setup{
     on_attach = on_attach,

@@ -20,16 +20,11 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    unison-nix = {
-      url = "github:ceedubs/unison-nix";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
     nix-colors.url = "github:misterio77/nix-colors";
 
   };
 
-  outputs = { nixpkgs, home-manager, hyprwm-contrib, unison-nix, sops-nix, ... }@inputs: let
+  outputs = { nixpkgs, home-manager, hyprwm-contrib, sops-nix, ... }@inputs: let
 
     systems = [
       "aarch64-linux"

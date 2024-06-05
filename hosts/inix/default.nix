@@ -31,7 +31,7 @@
     openssh.enable = true;
 
     jellyfin = {
-      enable = true;
+      enable = false;
       user = "nclaud";
       openFirewall = true;
     };
@@ -46,7 +46,7 @@
     };
 
     zerotierone = {
-      enable = true;
+      enable = false;
       # To remove networks, use the ZeroTier CLI: zerotier-cli leave <network-id>
       # TODO add secrets
       # joinNetworks = [];
