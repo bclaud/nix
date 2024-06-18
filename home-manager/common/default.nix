@@ -8,6 +8,5 @@
         ./vscodium
         ./zellij
         ./foot
-        ./kotlin
     ];
 }

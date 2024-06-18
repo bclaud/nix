@@ -14,7 +14,6 @@
       #lsp and treesitter
       nvim-lspconfig
       nvim-cmp
-      kotlin-vim
       nvim-treesitter.withAllGrammars
       nvim-treesitter-context
       nvim-treesitter-endwise
@@ -56,7 +55,7 @@
       nvim-web-devicons
     ];
 
-    extraPackages = with pkgs; [ nil elixir-ls lua-language-server kotlin-language-server nodePackages.pyright zls];
+    extraPackages = with pkgs; [ nil elixir-ls lua-language-server pyright zls];
   };
 
   xdg.configFile."nvim/init.lua".text = ''
@@ -429,13 +428,6 @@
 
   lspc.lua_ls.setup{
     cmd = { "${pkgs.lua-language-server}/bin/lua_language_server" },
-    on_attach = on_attach,
-    capabilities = capabilities,
-  }
-
-  lspc.kotlin_language_server.setup{
-    cmd = { "${pkgs.kotlin-language-server}/bin/kotlin-language-server" },
-    filetypes = {"kotlin"},
     on_attach = on_attach,
     capabilities = capabilities,
   }
