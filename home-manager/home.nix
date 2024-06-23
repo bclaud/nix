@@ -35,21 +35,17 @@ in
     chromium
     firefox
     foliate
-    idea-community-fhs
-    insomnia
+    #idea-community-fhs
     #jetbrains.idea-community
     #jetbrains.pycharm-community
     jq
     lazydocker
     lazygit
     libreoffice
-    librewolf
-    logseq
+    #logseq
     mpv
     postman
-    pycharm-community-fhs
     scrcpy
-    vscode-fhs 
   ];
 
   # Nicely reload system units when changing configs

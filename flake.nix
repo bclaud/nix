@@ -44,6 +44,7 @@
     forEachSystem = f: nixpkgs.lib.genAttrs systems (system: f pkgsFor.${system});
 
   in {
+    packages = forEachSystem (pkgs: import ./pkgs { inherit pkgs; });
 
     # NixOS configuration entrypoint
     # Available through 'nixos-rebuild --flake .#your-hostname'
