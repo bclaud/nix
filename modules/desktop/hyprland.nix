@@ -43,7 +43,6 @@ in
       dbus.enable = true;
     };
 
-    sound.enable = true;
     hardware.pulseaudio ={
       enable = false;
       package = pkgs.pulseaudioFull;

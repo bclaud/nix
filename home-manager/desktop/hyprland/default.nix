@@ -49,7 +49,7 @@ in {
 
      # not well configured dependencies (should not be at PATH IMO)
      #wayland stuff
-     home.packages = with pkgs; [ gnome.nautilus pavucontrol wl-clipboard mako grimblast hyprpaper cliphist wl-clip-persist pamixer ];
+     home.packages = with pkgs; [ nautilus pavucontrol wl-clipboard mako grimblast hyprpaper cliphist wl-clip-persist pamixer ];
 
      home.pointerCursor = {
        gtk.enable = true;
@@ -67,7 +67,7 @@ in {
         };
 
         iconTheme = {
-          package = pkgs.gnome.adwaita-icon-theme;
+          package = pkgs.adwaita-icon-theme;
           name = "Adwaita";
         };
 
@@ -89,7 +89,7 @@ in {
      wallpaper = ,${cfg.wallpaper}
      '';
 
-     # screensharing
+     #screensharing
      xdg.portal = {
        enable = true;
        extraPortals = [ 
