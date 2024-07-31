@@ -20,8 +20,10 @@
   };
 
   boot.loader.systemd-boot.enable = true;
-  systemd.tmpfiles.rules = ["L+    /opt/rocm/hip   -    -    -     -    ${pkgs.rocmPackages.clr}"];
+  # systemd.tmpfiles.rules = ["L+    /opt/rocm/hip   -    -    -     -    ${pkgs.rocmPackages.clr}"];
   boot.loader.efi.canTouchEfiVariables = true;
+
+  boot.binfmt.emulatedSystems = [ "aarch64-linux" ];
 
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/f01f3e8f-3856-453d-ba4a-b7ea2946faa3";
@@ -58,8 +60,8 @@
         amdvlk
         libva
         libvdpau-va-gl
-        rocm-opencl-icd
-        rocm-opencl-runtime
+        # rocm-opencl-icd
+        # rocm-opencl-runtime
         #rocmPackages.clr
         #rocmPackages.clr.icd
         #rocmPackages.hipblas
