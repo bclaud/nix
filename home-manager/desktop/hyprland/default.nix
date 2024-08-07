@@ -94,7 +94,7 @@ in {
        enable = true;
        extraPortals = [ 
          pkgs.xdg-desktop-portal-hyprland 
-         pkgs.xdg-desktop-portal-gtk
+         # pkgs.xdg-desktop-portal-gtk
        ];
        configPackages = [ pkgs.hyprland ];
      };
@@ -402,6 +402,8 @@ in {
          "hyprpaper"
          "wl-paste --type text --watch cliphist store"
          "wl-paste --type image --watch cliphist store"
+         "exec-once=dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
+
        ];
 
        input = {
