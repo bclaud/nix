@@ -55,7 +55,7 @@
       nvim-web-devicons
     ];
 
-    extraPackages = with pkgs; [ nil elixir-ls lua-language-server pyright zls];
+    extraPackages = with pkgs; [ nil elixir-ls lua-language-server basedpyright zls];
   };
 
   xdg.configFile."nvim/init.lua".text = ''
@@ -432,10 +432,16 @@
     capabilities = capabilities,
   }
 
-  lspc.pyright.setup{
-    cmd = { "${pkgs.pyright}/bin/pyright-langserver", "--stdio" },
+  lspc.basedpyright.setup{
+    cmd = { "${pkgs.basedpyright}/bin/basedpyright-langserver", "--stdio" },
     on_attach = on_attach,
-    capabilities = capabilities,
+    settings = {
+      basedpyright = {
+        analysis = {
+          typeCheckingMode = "standard"
+        }
+      }
+    }
   }
 
   lspc.zls.setup{
