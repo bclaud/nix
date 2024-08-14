@@ -5,6 +5,7 @@ let
   hasLazydocker = hasPackage "lazydocker";
   hasLazygit = hasPackage "lazygit";
   hasZellij = hasPackage "zellij";
+  hasFoot = hasPackage "foot";
 in
 {
   home.packages = with pkgs; [
@@ -71,7 +72,21 @@ in
       set -x GPG_TTY (tty)
       set -x SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
       gpgconf --launch gpg-agent
+      
+      update_cwd_osc
     '';
+
+    shellInit = lib.mkIf hasFoot ''
+          # Taken from https://codeberg.org/dnkl/foot/wiki#user-content-spawning-new-terminal-instances-in-the-current-working-directory
+          function update_cwd_osc --on-variable PWD --description 'Notify terminals when $PWD changes'
+            if status --is-command-substitution || set -q INSIDE_EMACS
+                return
+            end
+            printf \e\]7\;file://%s%s\e\\ $hostname (string escape --style=url $PWD)
+          end
+
+          update_cwd_osc # Run once since we might have inherited PWD from a parent shell
+      '';
   };
 
   programs.starship.enable = true;
