@@ -365,11 +365,6 @@ in {
      wayland.windowManager.hyprland.enable = true;
      wayland.windowManager.hyprland.systemd.enable = true;
      wayland.windowManager.hyprland.settings = {
-       windowrulev2 = [
-         "forceinput,class:^(jetbrains-.*),title:^Select Methods to Override"
-         "windowdance,class:^(jetbrains-.*)"
-       ];
-
        bind = [
          "${mod},P,exec,${grimblastBin} --notify copy output"
          "${modshift}, P, exec, ${grimblastBin} --notify copy area"
