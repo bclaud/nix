@@ -1,5 +1,4 @@
 { config, pkgs, lib, ... }:
-
 let
   libvirtdEnable = config.virtualisation.libvirtd.enable;
 in

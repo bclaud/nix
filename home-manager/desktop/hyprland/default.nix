@@ -49,7 +49,7 @@ in {
 
      # not well configured dependencies (should not be at PATH IMO)
      #wayland stuff
-     home.packages = with pkgs; [ nautilus pavucontrol wl-clipboard mako grimblast hyprpaper cliphist wl-clip-persist pamixer ];
+     home.packages = with pkgs; [ nautilus pavucontrol wl-clipboard mako grimblast hyprpaper cliphist wl-clip-persist pamixer xdg-utils ];
 
      home.pointerCursor = {
        gtk.enable = true;
@@ -94,8 +94,11 @@ in {
        enable = true;
        extraPortals = [ 
          pkgs.xdg-desktop-portal-hyprland 
-         # pkgs.xdg-desktop-portal-gtk
+         pkgs.xdg-desktop-portal-gtk
        ];
+      config.common = {
+        "org.freedesktop.portal.FileChooser" = [ "xdg-desktop-portal-gtk" ];
+      };
        configPackages = [ pkgs.hyprland ];
      };
 
@@ -398,7 +401,6 @@ in {
          "wl-paste --type text --watch cliphist store"
          "wl-paste --type image --watch cliphist store"
          "exec-once=dbus-update-activation-environment --systemd WAYLAND_DISPLAY XDG_CURRENT_DESKTOP"
-
        ];
 
        input = {

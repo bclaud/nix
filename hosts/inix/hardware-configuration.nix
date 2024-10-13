@@ -57,13 +57,13 @@
     graphics = {
       enable = true;
       extraPackages = with pkgs; [ 
-        amdvlk
+        # amdvlk
         libva
         libvdpau-va-gl
+        rocmPackages.clr.icd
         # rocm-opencl-icd
         # rocm-opencl-runtime
         #rocmPackages.clr
-        #rocmPackages.clr.icd
         #rocmPackages.hipblas
         #rocmPackages.rocblas
         #rocmPackages.rocm-comgr

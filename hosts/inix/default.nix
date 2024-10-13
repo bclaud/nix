@@ -36,6 +36,10 @@
       openFirewall = true;
     };
 
+    kavita = {
+      enable = true;
+      tokenKeyFile = "/var/lib/kavita/token.key";
+    };
     languagetool = {
       enable = false;
       allowOrigin = "*";
@@ -50,6 +54,15 @@
       # To remove networks, use the ZeroTier CLI: zerotier-cli leave <network-id>
       # TODO add secrets
       # joinNetworks = [];
+    };
+
+    k3s = {
+      enable = false;
+      role = "server";
+    };
+
+    davfs2 = {
+      enable = true;
     };
 
   };
@@ -89,6 +102,10 @@
     hostName = "inix"; # Define your hostname.
     networkmanager.enable = false;
     useDHCP = true;
+    wireless ={
+      enable = true;
+      userControlled.enable = true;
+    };
   };
 
   users = {
@@ -97,10 +114,8 @@
     users.nclaud = {
       isNormalUser = true;
       description = "nclaud";
-      extraGroups = [ "networkmanager" "wheel" ];
+      extraGroups = [ "networkmanager" "wheel" config.services.davfs2.davGroup ];
       shell = pkgs.fish;
-      packages = with pkgs; [
-      ];
     };
   };
 
