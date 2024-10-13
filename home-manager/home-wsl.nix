@@ -4,7 +4,6 @@
 { inputs, lib, config, osConfig, pkgs, ... }:
 let
 
-
 in
   {
   imports = [
@@ -20,11 +19,6 @@ in
     homeDirectory = "/home/nclaud";
   };
 
-  desktops.hyprland = {
-    enable = lib.mkIf (osConfig.claud.desktop == "hyprland") true;
-    wallpaper = ../wallpapers/wallpaper1.jpg;
-  };
-
   colorScheme = inputs.nix-colors.colorSchemes.tokyo-city-dark;
 
   programs.home-manager.enable = true;
@@ -32,24 +26,10 @@ in
   home.packages = with pkgs; [ 
     aichat
     bottom
-    beekeeper-studio
-    chromium
-    firefox
-    foliate
-    #idea-community-fhs
-    #jetbrains.idea-community
-    #jetbrains.pycharm-community
-    vscode-fhs
     jq
     lazydocker
     lazygit
-    libreoffice
-    #logseq
     mpv
-    postman
-    scrcpy
-    winbox
-    ryujinx
   ];
 
   # Nicely reload system units when changing configs

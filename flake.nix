@@ -15,6 +15,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    nixos-wsl = {
+      url = "github:nix-community/NixOS-WSL";
+      inputs.nixpkgs.follows = "nixpkgs";
+
+    };
+
     sops-nix = {
       url = "github:Mic92/sops-nix";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -24,7 +30,7 @@
 
   };
 
-  outputs = { nixpkgs, home-manager, hyprwm-contrib, sops-nix, ... }@inputs: let
+  outputs = { nixpkgs, home-manager, hyprwm-contrib, sops-nix, nixos-wsl, ... }@inputs: let
 
     systems = [
       "aarch64-linux"
@@ -60,6 +66,19 @@
           home-manager.nixosModules.default
           sops-nix.nixosModules.sops
         ];
+      };
+
+      wsl = nixpkgs.lib.nixosSystem {
+        specialArgs = { inherit inputs; };
+
+        pkgs = pkgsFor.x86_64-linux;
+        modules = [
+          ./hosts/wsl
+          nixos-wsl.nixosModules.wsl
+          home-manager.nixosModules.default
+          sops-nix.nixosModules.sops
+        ];
+
       };
     };
 
