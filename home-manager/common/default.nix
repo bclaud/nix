@@ -5,7 +5,6 @@
         ./fish
         ./git
         ./nvim
-        ./vscodium
         ./zellij
         ./foot
     ];
