@@ -1,4 +1,4 @@
-{pkgs, lib, config, ...}: 
+{pkgs, lib, config, nixosConfig, ...}: 
 let
   packageNames = map (p: p.pname or p.name or null) config.home.packages;
   hasPackage = name: lib.any (x: x == name) packageNames;
@@ -68,13 +68,15 @@ in
     ];
 
     # TODO this should be handled by yubikey-agent
-    interactiveShellInit = ''
+  interactiveShellInit = ''
+    ${lib.optionalString nixosConfig.services.yubikeyAccess.enable ''
       set -x GPG_TTY (tty)
       set -x SSH_AUTH_SOCK (gpgconf --list-dirs agent-ssh-socket)
       gpgconf --launch gpg-agent
-      
-      update_cwd_osc
-    '';
+    ''}
+
+    update_cwd_osc
+  '';
 
     shellInit = lib.mkIf hasFoot ''
           # Taken from https://codeberg.org/dnkl/foot/wiki#user-content-spawning-new-terminal-instances-in-the-current-working-directory
