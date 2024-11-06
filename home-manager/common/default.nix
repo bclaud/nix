@@ -1,11 +1,11 @@
 { ... }:
 {
-    imports = [
-        ./direnv
-        ./fish
-        ./git
-        ./nvim
-        ./zellij
-        ./foot
-    ];
+  imports = [
+    ./direnv
+    ./fish
+    ./git
+    ./nvim
+    ./zellij
+    ./foot
+  ];
 }

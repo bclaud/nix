@@ -1,9 +1,14 @@
-{pkgs, config, lib, ...}:
+{
+  pkgs,
+  config,
+  lib,
+  ...
+}:
 with lib;
-let 
+let
   cfg = config.claud.desktop;
   bluetoothEnabled = config.hardware.bluetooth.enable;
-in 
+in
 {
 
   config = mkIf (cfg == "hyprland") {
@@ -14,14 +19,14 @@ in
 
     environment = {
       loginShellInit = ''
-         if [ "$(tty)" = "/dev/tty1" ]; then
-          exec Hyprland &> /dev/null
-         fi
+        if [ "$(tty)" = "/dev/tty1" ]; then
+         exec Hyprland &> /dev/null
+        fi
       '';
     };
 
     services = {
-        # TODO something is enabling this option
+      # TODO something is enabling this option
       displayManager.sddm.enable = false;
 
       xserver = {
@@ -36,14 +41,14 @@ in
         displayManager.gdm.enable = false;
 
         # TODO set video driver based on config
-        videoDrivers = ["amdgpu"];
+        videoDrivers = [ "amdgpu" ];
 
       };
 
       dbus.enable = true;
     };
 
-    hardware.pulseaudio ={
+    hardware.pulseaudio = {
       enable = false;
       package = pkgs.pulseaudioFull;
     };

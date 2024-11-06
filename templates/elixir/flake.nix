@@ -4,17 +4,20 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixpkgs-unstable";
   };
 
-  outputs = { self, nixpkgs }:
+  outputs =
+    { self, nixpkgs }:
     let
       systems = [
         "aarch64-linux"
         "x86_64-linux"
       ];
 
-      eachSystem = with nixpkgs.lib; f: foldAttrs mergeAttrs { }
-        (map (s: mapAttrs (_: v: { ${s} = v; }) (f s)) systems);
+      eachSystem =
+        with nixpkgs.lib;
+        f: foldAttrs mergeAttrs { } (map (s: mapAttrs (_: v: { ${s} = v; }) (f s)) systems);
     in
-    eachSystem (system:
+    eachSystem (
+      system:
       let
         inherit (nixpkgs.lib) optional;
         pkgs = import nixpkgs {
@@ -31,7 +34,8 @@
         devShells.default = mkShell {
           name = "rinha-elixir-shell";
           buildInputs = with pkgs; [ beam.packages.erlang_26.elixir_1_16 ];
-          LOCALE_ARCHIVE = if pkgs.stdenv.isLinux then "${pkgs.glibcLocalesUtf8}/lib/locale/locale-archive" else "";
+          LOCALE_ARCHIVE =
+            if pkgs.stdenv.isLinux then "${pkgs.glibcLocalesUtf8}/lib/locale/locale-archive" else "";
         };
       }
     );

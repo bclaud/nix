@@ -1,8 +1,13 @@
-{config, lib, pkgs, ... }:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-let 
+let
   cfg = config.services.lact;
-in 
+in
 {
   options.services.lact = {
     enable = mkEnableOption "Enable Radeon GPU monitoring and tweaking";
@@ -12,9 +17,14 @@ in
     systemd.services.lact = {
       enable = true;
       description = "Radeon GPU";
-      after = ["syslog.target" "systemd-modules-load.service" ];
+      after = [
+        "syslog.target"
+        "systemd-modules-load.service"
+      ];
 
-      unitConfig = { ConditionPathExists = "${pkgs.lact}/bin/lact"; };
+      unitConfig = {
+        ConditionPathExists = "${pkgs.lact}/bin/lact";
+      };
 
       serviceConfig = {
         User = "root";

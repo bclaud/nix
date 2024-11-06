@@ -1,12 +1,18 @@
-{ config, pkgs, inputs, ... }:
 {
-  imports = [ # Include the results of the hardware scan.
-      inputs.home-manager.nixosModules.default
-      ../common/global
-      ../../modules/solaar-logitech.nix
-      ../../modules/yubikey-access.nix
-      ../../modules/lact-radeon.nix
-    ];
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
+{
+  imports = [
+    # Include the results of the hardware scan.
+    inputs.home-manager.nixosModules.default
+    ../common/global
+    ../../modules/solaar-logitech.nix
+    ../../modules/yubikey-access.nix
+    ../../modules/lact-radeon.nix
+  ];
 
   wsl = {
     enable = true;
@@ -79,7 +85,7 @@
     fish.enable = true;
   };
 
-  virtualisation = { 
+  virtualisation = {
 
     docker = {
       enable = true;
@@ -89,10 +95,13 @@
   };
 
   environment = {
-    shells = with pkgs; [ bash fish ];
+    shells = with pkgs; [
+      bash
+      fish
+    ];
 
     systemPackages = with pkgs; [
-      vim 
+      vim
       wget
       pciutils
     ];
@@ -101,7 +110,6 @@
       TZ = "America/Sao_Paulo"; # fix for firefox datetime
     };
   };
-
 
   networking = {
     hostName = "wsl"; # Define your hostname.
@@ -113,11 +121,14 @@
     users.nclaud = {
       isNormalUser = true;
       description = "nclaud";
-      extraGroups = [ "networkmanager" "wheel" config.services.davfs2.davGroup ];
+      extraGroups = [
+        "networkmanager"
+        "wheel"
+        config.services.davfs2.davGroup
+      ];
       shell = pkgs.fish;
     };
   };
-
 
   time.timeZone = "America/Sao_Paulo";
   i18n.defaultLocale = "en_US.UTF-8";
@@ -133,8 +144,6 @@
     LC_TIME = "pt_BR.UTF-8";
   };
 
-
-
   fonts = {
     packages = with pkgs; [
       jetbrains-mono
@@ -149,14 +158,13 @@
     };
   };
 
-
   # home-manager
   home-manager = {
     useGlobalPkgs = true;
 
-    extraSpecialArgs = { 
+    extraSpecialArgs = {
       nixosConfig = config;
-      inherit inputs; 
+      inherit inputs;
     };
 
     users = {
@@ -166,7 +174,7 @@
   };
 
   # Open ports in the firewall.
-  networking.firewall.allowedTCPPorts = [ 
+  networking.firewall.allowedTCPPorts = [
     # 6443 # k3s: required so that pods can reach the API server (running on port 6443 by default)
   ];
 
@@ -176,7 +184,7 @@
 
   systemd.user = {
     paths.vscode-remote-workaround = {
-      wantedBy = ["default.target"];
+      wantedBy = [ "default.target" ];
       pathConfig.PathChanged = "%h/.vscode-server/bin";
     };
     services.vscode-remote-workaround.script = ''
@@ -201,13 +209,16 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "24.05"; # Did you read the comment?
-  nix = { 
-      settings = {
-        experimental-features = [ "nix-command" "flakes" "repl-flake" ];
-        auto-optimise-store = true;
-        trusted-users = [ "nclaud" ];
-        access-tokens = [ config.sops.secrets.github-token.path ];
-      };
+  nix = {
+    settings = {
+      experimental-features = [
+        "nix-command"
+        "flakes"
+        "repl-flake"
+      ];
+      auto-optimise-store = true;
+      trusted-users = [ "nclaud" ];
+      access-tokens = [ config.sops.secrets.github-token.path ];
     };
+  };
 }
-

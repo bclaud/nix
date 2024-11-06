@@ -1,17 +1,22 @@
-{ config, pkgs, inputs, ... }:
 {
-  imports = [ # Include the results of the hardware scan.
-      inputs.home-manager.nixosModules.default
+  config,
+  pkgs,
+  inputs,
+  ...
+}:
+{
+  imports = [
+    # Include the results of the hardware scan.
+    inputs.home-manager.nixosModules.default
 
-      ./hardware-configuration.nix
-      ../common/global
-      ../../modules/desktop
-      ../../modules/vm.nix
-      ../../modules/solaar-logitech.nix
-      ../../modules/yubikey-access.nix
-      ../../modules/lact-radeon.nix
-    ];
-
+    ./hardware-configuration.nix
+    ../common/global
+    ../../modules/desktop
+    ../../modules/vm.nix
+    ../../modules/solaar-logitech.nix
+    ../../modules/yubikey-access.nix
+    ../../modules/lact-radeon.nix
+  ];
 
   claud = {
     desktop = "hyprland";
@@ -40,6 +45,7 @@
       enable = true;
       tokenKeyFile = "/var/lib/kavita/token.key";
     };
+
     languagetool = {
       enable = false;
       allowOrigin = "*";
@@ -62,21 +68,38 @@
     };
 
     davfs2 = {
-      enable = true;
+      enable = false;
+    };
+
+    livebook = {
+      enableUserService = true;
+
+      environment = {
+        LIVEBOOK_PORT = 9999;
+        LIVEBOOK_TOKEN_ENABLED = false;
+      };
+      environmentFile = null;
     };
 
   };
 
   programs = {
+    nix-ld.enable = true;
+
     gnupg.agent = {
       enable = true;
       enableSSHSupport = true;
     };
 
     fish.enable = true;
+
+    steam = {
+      enable = true;
+      gamescopeSession.enable = true;
+    };
   };
 
-  virtualisation = { 
+  virtualisation = {
 
     docker.enable = true;
 
@@ -84,10 +107,13 @@
   };
 
   environment = {
-    shells = with pkgs; [ bash fish ];
+    shells = with pkgs; [
+      bash
+      fish
+    ];
 
     systemPackages = with pkgs; [
-      vim 
+      vim
       wget
       pciutils
     ];
@@ -97,12 +123,11 @@
     };
   };
 
-
   networking = {
     hostName = "inix"; # Define your hostname.
     networkmanager.enable = false;
     useDHCP = true;
-    wireless ={
+    wireless = {
       enable = true;
       userControlled.enable = true;
     };
@@ -114,11 +139,14 @@
     users.nclaud = {
       isNormalUser = true;
       description = "nclaud";
-      extraGroups = [ "networkmanager" "wheel" config.services.davfs2.davGroup ];
+      extraGroups = [
+        "networkmanager"
+        "wheel"
+        config.services.davfs2.davGroup
+      ];
       shell = pkgs.fish;
     };
   };
-
 
   time.timeZone = "America/Sao_Paulo";
   i18n.defaultLocale = "en_US.UTF-8";
@@ -134,8 +162,6 @@
     LC_TIME = "pt_BR.UTF-8";
   };
 
-
-
   fonts = {
     packages = with pkgs; [
       jetbrains-mono
@@ -144,16 +170,19 @@
       fira-code
       (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
     ];
+    fontconfig = {
+      hinting.style = "full";
+      hinting.enable = true;
+    };
   };
-
 
   # home-manager
   home-manager = {
     useGlobalPkgs = true;
 
-    extraSpecialArgs = { 
+    extraSpecialArgs = {
       nixosConfig = config;
-      inherit inputs; 
+      inherit inputs;
     };
 
     users = {
@@ -162,8 +191,12 @@
   };
 
   # Open ports in the firewall.
-  # networking.firewall.allowedTCPPorts = [ ... ];
-  # networking.firewall.allowedUDPPorts = [ ... ];
+  networking.firewall.allowedTCPPorts = [
+    6443 # k3s: required so that pods can reach the API server (running on port 6443 by default)
+  ];
+
+  # networking.firewall.allowedUDPPorts = [ 
+  # ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
 
@@ -174,13 +207,15 @@
   # Before changing this value read the documentation for this option
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "24.05"; # Did you read the comment?
-  nix = { 
-      settings = {
-        experimental-features = [ "nix-command" "flakes" "repl-flake" ];
-        auto-optimise-store = true;
-        trusted-users = [ "nclaud" ];
-        access-tokens = [ config.sops.secrets.github-token.path ];
-      };
+  nix = {
+    settings = {
+      experimental-features = [
+        "nix-command"
+        "flakes"
+      ];
+      auto-optimise-store = true;
+      trusted-users = [ "nclaud" ];
+      access-tokens = [ config.sops.secrets.github-token.path ];
     };
+  };
 }
-

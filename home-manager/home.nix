@@ -1,12 +1,18 @@
 # This is your home-manager configuration file
 # Use this to configure your home environment (it replaces ~/.config/nixpkgs/home.nix)
 
-{ inputs, lib, config, osConfig, pkgs, ... }:
+{
+  inputs,
+  lib,
+  config,
+  osConfig,
+  pkgs,
+  ...
+}:
 let
 
-
 in
-  {
+{
   imports = [
     inputs.nix-colors.homeManagerModule
 
@@ -29,7 +35,57 @@ in
 
   programs.home-manager.enable = true;
 
-  home.packages = with pkgs; [ 
+  programs.mangohud = {
+    enable = true;
+    enableSessionWide = true;
+    settings = {
+      frame_timing = true;
+      cpu_stats = true;
+      cpu_temp = true;
+      gpu_stats = true;
+      gpu_temp = true;
+      ram = true;
+      vram = true;
+      hud_compact = false;
+
+      # Hide until toggled
+
+      toggle_hud = "Shift_L+F1";
+      toggle_hud_position = "Shift_L+F2";
+      toggle_logging = "Shift_L+F3";
+      reload_cfg = "Shift_L+F4";
+    };
+  };
+
+  programs.helix = {
+    enable = true;
+    # editor = {
+    #   line-number = "relative";
+    # };
+    settings = {
+      theme = "autumn_night_transparent";
+      editor.cursor-shape = {
+        normal = "block";
+        insert = "bar";
+        select = "underline";
+      };
+    };
+    languages.language = [
+      {
+        name = "nix";
+        auto-format = true;
+        formatter.command = "${pkgs.nixfmt-rfc-style}/bin/nixfmt";
+      }
+    ];
+    themes = {
+      autumn_night_transparent = {
+        "inherits" = "autumn_night";
+        "ui.background" = { };
+      };
+    };
+  };
+
+  home.packages = with pkgs; [
     aichat
     bottom
     beekeeper-studio
@@ -40,6 +96,7 @@ in
     #jetbrains.idea-community
     #jetbrains.pycharm-community
     vscode-fhs
+    zed-editor
     jq
     lazydocker
     lazygit

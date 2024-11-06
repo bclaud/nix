@@ -1,15 +1,20 @@
-{config, lib, pkgs, ...}:
+{
+  config,
+  lib,
+  pkgs,
+  ...
+}:
 with lib;
-let 
+let
   cfg = config.services.solaarLogitech;
-in 
+in
 {
   options.services.solaarLogitech = {
     enable = mkEnableOption "Enable solaar program and necessary services";
   };
 
   config = mkIf cfg.enable {
-    
+
     services.udev.packages = [ pkgs.logitech-udev-rules ];
 
     environment.systemPackages = [

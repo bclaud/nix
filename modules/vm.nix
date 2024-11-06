@@ -1,4 +1,9 @@
-{ config, pkgs, lib, ... }:
+{
+  config,
+  pkgs,
+  lib,
+  ...
+}:
 let
   libvirtdEnable = config.virtualisation.libvirtd.enable;
 in
@@ -6,7 +11,7 @@ in
 
   config = lib.mkIf libvirtdEnable {
 
-  # Enable dconf (System Management Tool) programs.dconf.enable = true;
+    # Enable dconf (System Management Tool) programs.dconf.enable = true;
 
     # Add user to libvirtd group
     users.users.nclaud.extraGroups = [ "libvirtd" ];
@@ -15,7 +20,8 @@ in
     environment.systemPackages = with pkgs; [
       virt-manager
       virt-viewer
-      spice spice-gtk
+      spice
+      spice-gtk
       spice-protocol
       win-virtio
       win-spice

@@ -1,8 +1,8 @@
-{config, lib, ...}:
+{ config, lib, ... }:
 with lib;
-let 
+let
   cfg = config.claud.desktop;
-in 
+in
 {
 
   config = mkIf (cfg == "gnome") {
@@ -13,9 +13,9 @@ in
       desktopManager.gnome.enable = true;
       displayManager.gdm.enable = true;
 
-    # TODO set video driver based on config
-      videoDrivers = ["amdgpu"];
-    
+      # TODO set video driver based on config
+      videoDrivers = [ "amdgpu" ];
+
     };
 
     hardware.pulseaudio.enable = false;
