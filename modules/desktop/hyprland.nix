@@ -41,7 +41,7 @@ in
         displayManager.gdm.enable = false;
 
         # TODO set video driver based on config
-        videoDrivers = [ "amdgpu" ];
+        videoDrivers = [ "nvidia" ];
 
       };
 

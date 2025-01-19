@@ -26,7 +26,7 @@
   boot.kernelPackages = pkgs.linuxPackages_latest;
   boot.kernelModules = [
     "kvm-intel"
-    "amdgpu"
+    # "nvidia_uvm"
   ];
   boot.extraModulePackages = [ ];
 
@@ -75,6 +75,17 @@
 
   # AMD GPU
   hardware = {
+    nvidia = {
+      modesetting.enable = true;
+      powerManagement.finegrained = false;
+      open = false;
+      nvidiaSettings = true;
+      package = config.boot.kernelPackages.nvidiaPackages.stable;
+    };
+
+    opengl = {
+      enable = true;
+    };
     keyboard.qmk.enable = true;
     graphics = {
       enable = true;
@@ -82,22 +93,23 @@
         # amdvlk
         libva
         libvdpau-va-gl
-        rocmPackages.clr.icd
-        # rocm-opencl-icd
-        # rocm-opencl-runtime
-        #rocmPackages.clr
-        #rocmPackages.hipblas
-        #rocmPackages.rocblas
-        #rocmPackages.rocm-comgr
-        #rocmPackages.rocm-runtime
-        #rocmPackages.rocm-smi
-        #rocmPackages.rocsolver
-        #rocmPackages.rocsparse
+        # rocmPackages.clr.icd
+        # rocmPackages.clr
+        # rocmPackages.hipblas
+        # rocmPackages.rocblas
+        # rocmPackages.rocm-comgr
+        # rocmPackages.rocm-runtime
+        # rocmPackages.rocm-smi
+        # rocmPackages.rocsolver
+        # rocmPackages.rocsparse
+        # cudaPackages.cuda_cudart
+        # cudaPackages.cudnn
+        # cudatoolkit
         vaapiVdpau
       ];
     };
 
-    bluetooth.enable = true;
+    bluetooth.enable = false;
     bluetooth.powerOnBoot = true;
   };
 

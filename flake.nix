@@ -49,12 +49,27 @@
         "x86_64-darwin"
       ];
 
+      expPkgs = import nixpkgs {
+          localSystem = {
+            gcc.arch = "tigerlake";
+            gcc.tune = "tigerlake";
+            system = "x86_64-linux";
+          };
+          config.allowUnfree = true;
+          allowUnfreePredicate = (_: true);
+          overlays = import ./overlays { inherit inputs; };
+      };
+
       pkgsFor = nixpkgs.lib.genAttrs systems (
         system:
         import nixpkgs {
           inherit system;
           config.allowUnfree = true;
+          config.cudaSupport = true;
           allowUnfreePredicate = (_: true);
+          config.permittedInsecurePackages = [
+            "electron-27.3.11"
+          ];
           overlays = import ./overlays { inherit inputs; };
         }
       );

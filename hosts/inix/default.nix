@@ -18,6 +18,11 @@
     ../../modules/lact-radeon.nix
   ];
 
+  nixpkgs.hostPlatform = {
+    cudaSupport = true;
+    cpu.arch = "tigerlake";
+    gcc.tune = "tigerlake";
+  };
   claud = {
     desktop = "hyprland";
   };
@@ -30,13 +35,13 @@
   services = {
 
     yubikeyAccess.enable = true;
-    lact.enable = true;
+    lact.enable = false;
     solaarLogitech.enable = false;
 
     openssh.enable = true;
 
     jellyfin = {
-      enable = false;
+      enable = true;
       user = "nclaud";
       openFirewall = true;
     };
@@ -79,6 +84,23 @@
         LIVEBOOK_TOKEN_ENABLED = false;
       };
       environmentFile = null;
+
+      extraPackages = [pkgs.gnumake pkgs.gcc pkgs.python3 pkgs.bazel];
+      environment = {
+        XLA_TARGET = "cuda";
+        XLA_BUILD = "true";
+      };
+    };
+
+    ollama = {
+      enable = true;
+      acceleration = "cuda";
+      environmentVariables = {
+        CUDA_VISIBLE_DEVICES = "0";
+        OLLAMA_DEBUG = "1";
+        # 22GB
+        OLLAMA_MAX_VRAM = "23622320128";
+      };
     };
 
   };
@@ -103,7 +125,7 @@
 
     docker.enable = true;
 
-    libvirtd.enable = true;
+    libvirtd.enable = false;
   };
 
   environment = {
@@ -168,7 +190,8 @@
       roboto
       openmoji-color
       fira-code
-      (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
+      nerd-fonts.jetbrains-mono
+      # (nerdfonts.override { fonts = [ "JetBrainsMono" ]; })
     ];
     fontconfig = {
       hinting.style = "full";
@@ -209,6 +232,7 @@
   system.stateVersion = "24.05"; # Did you read the comment?
   nix = {
     settings = {
+      system-features = [ "gccarch-tigerlake" "big-parallel" "kvm" ];
       experimental-features = [
         "nix-command"
         "flakes"

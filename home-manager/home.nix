@@ -49,6 +49,7 @@ in
       hud_compact = false;
 
       # Hide until toggled
+      no_display = true;
 
       toggle_hud = "Shift_L+F1";
       toggle_hud_position = "Shift_L+F2";
@@ -57,8 +58,19 @@ in
     };
   };
 
-  programs.helix = {
+  programs.zed-editor = {
     enable = true;
+    userSettings = {
+      features = {
+        copilot = true;
+      };
+      vim_mode = true;
+    };
+    extensions = ["basedpyright"];
+    extraPackages = [ pkgs.basedpyright];
+  };
+  programs.helix = {
+    enable = false;
     # editor = {
     #   line-number = "relative";
     # };
@@ -96,17 +108,17 @@ in
     #jetbrains.idea-community
     #jetbrains.pycharm-community
     vscode-fhs
-    zed-editor
     jq
     lazydocker
     lazygit
     libreoffice
-    #logseq
+    logseq
     mpv
     postman
     scrcpy
     winbox
     ryujinx
+    gnumake
   ];
 
   # Nicely reload system units when changing configs

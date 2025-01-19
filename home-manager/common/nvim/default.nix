@@ -13,6 +13,7 @@
     nodejs
     xclip
     gnumake
+    basedpyright
   ];
 
   home.sessionVariables = {

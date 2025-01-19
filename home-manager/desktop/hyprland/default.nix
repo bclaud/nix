@@ -421,6 +421,8 @@ in
         "${mod},mouse:273,resizewindow"
       ];
 
+      monitor="DP-3,2560x1440@165,0x0,1";
+
       exec-once = [
         "waybar"
         "mako"
@@ -450,9 +452,6 @@ in
 
       decoration = {
         rounding = 6;
-        drop_shadow = true;
-        shadow_render_power = 3;
-        "col.shadow" = "rgba(1a1a1aee)";
       };
 
       animations = {
