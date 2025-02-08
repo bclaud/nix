@@ -19,7 +19,7 @@
   ];
 
   nixpkgs.hostPlatform = {
-    cudaSupport = true;
+    cudaSupport = false;
     cpu.arch = "tigerlake";
     gcc.tune = "tigerlake";
   };
@@ -97,9 +97,9 @@
       acceleration = "cuda";
       environmentVariables = {
         CUDA_VISIBLE_DEVICES = "0";
-        OLLAMA_DEBUG = "1";
+        OLLAMA_DEBUG = "0";
         # 22GB
-        OLLAMA_MAX_VRAM = "23622320128";
+        # OLLAMA_MAX_VRAM = "23622320128";
       };
     };
 
@@ -116,7 +116,7 @@
     fish.enable = true;
 
     steam = {
-      enable = true;
+      enable = false;
       gamescopeSession.enable = true;
     };
   };
@@ -125,7 +125,7 @@
 
     docker.enable = true;
 
-    libvirtd.enable = false;
+    libvirtd.enable = true;
   };
 
   environment = {

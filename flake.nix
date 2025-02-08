@@ -65,7 +65,7 @@
         import nixpkgs {
           inherit system;
           config.allowUnfree = true;
-          config.cudaSupport = true;
+          config.cudaSupport = false;
           allowUnfreePredicate = (_: true);
           config.permittedInsecurePackages = [
             "electron-27.3.11"
